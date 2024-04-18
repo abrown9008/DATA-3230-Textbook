@@ -1,0 +1,30 @@
+project:
+  type: book
+
+book:
+  title: "DATA 3230"
+  author: "Dr Austin R Brown"
+  date: "Fall 2024"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
+execute: 
+  echo: true
+  include: true
+  warning: false
+  message: false
+  tidy: false
+

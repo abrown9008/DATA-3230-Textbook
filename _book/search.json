@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DATA 3230",
+    "section": "",
+    "text": "Preface\nWelcome to DATA 3230 - Data Visualization! My name is Dr Austin Brown and I am a faculty member in the School of Data Science and Analytics at Kennesaw State University.\nThis course is designed to teach students not only how to create data visualizations, but how to create them in an appropriate and aesthetically pleasing manner.\n\n\nCoding Requirements\nIn this course, I use R programming and specifically elements of the tidyverse to teach students how to generate beautiful visualizations using the popular visualization package, ggplot2. Now, you may be asking yourself: “what if I don’t have experience with R programming? Can I still be successful?”\nThe answer is unequivocally, yes! We start from the basics and work our way up to more complex examples, making sure that you have all the relevant code and explanations you need to be successful in this class and beyond.\nAll I ask is that along the way, if you run into issues, be sure to ask for help! That’s what I’m here for!\nSo if you’re ready to learn how to tell stories with data through a visual medium, come along with me!"
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "2  Summary",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+  },
+  {
+    "objectID": "intro.html#why-use-r",
+    "href": "intro.html#why-use-r",
+    "title": "1  Introduction",
+    "section": "1.1 Why Use R?",
+    "text": "1.1 Why Use R?\nYou may be asking yourself, out of all of the possible visualization softwares which exist, why should I spend time learning and using R?\nGreat question!\nR is a useful tool and worthwhile to learn for several reasons:\n\nIt’s free!\nBecause it’s open source, thousands of people have contributed packages and functions at a pace that proprietary softwares can’t compete with\nIt is very flexible and robust meaning there’s a lot you can do with it (including creating this very website!)\nIt is becoming widely used across many industries\nWe can create visualizations and perform quantitative analyses in the same system."
+  },
+  {
+    "objectID": "intro.html#so-what-is-r",
+    "href": "intro.html#so-what-is-r",
+    "title": "1  Introduction",
+    "section": "1.2 So What is R?",
+    "text": "1.2 So What is R?\nR is a command-line, object-oriented programming language commonly used for data analysis and statistics.\nCommand-line means that we have to give R commands in order for us to get it to do something. So for instance, if we wanted to know what the sum of 3 and 5 were, we can use R to solve this problem for us:\n\n## Adding 3 & 5 Together: ##\n3 + 5\n\n[1] 8\n\n\nObject-oriented means that we can save individual pieces of output as some name that we can use later. This is a super handy feature, especially when you have complicated scripts!\n\n## Saving the result of 3 + 5 as a ##\na &lt;- 3 + 5\na\n\n[1] 8"
+  },
+  {
+    "objectID": "intro.html#what-can-r-do",
+    "href": "intro.html#what-can-r-do",
+    "title": "1  Introduction",
+    "section": "1.3 What Can R Do?",
+    "text": "1.3 What Can R Do?\nWhat can R do? Well, for the purpose of data analytics, I am yet to find a limit of what it can do!\nIn this class, we will be using R as a tool for visualizing categorical and quantitative data through various means."
+  },
+  {
+    "objectID": "intro.html#functions-in-r",
+    "href": "intro.html#functions-in-r",
+    "title": "1  Introduction",
+    "section": "1.4 Functions in R",
+    "text": "1.4 Functions in R\n\nIn order to visualize data in R, we need to be able to import data into R.\nThere are a variety of ways of importing data into R, but they largely depend on the type of datafile that you are importing (e.g., Excel file, CSV file, text file, etc.).\nWhile there are lots of different files which can be imported into R (Google is an excellent resource for searching for code for how to do something), we’re going to focus on two main types: Excel and CSV\nLet’s try importing a CSV file into R. This file is part of the famous Framingham Heart Study.\nSince we set up our first class session by connecting to GitHub, we should have this file in our project folder already.\nNow to read in this CSV file, we will use the read_csv function which is part of the readr package.\nEvery function in R requires arguments specified inside of parentheses.\nWe can think of packages like toolboxes within a mechanic’s workshop. Each toolbox contains different tools.\nA tool is like a function; we use specific tools (functions) to solve specific problems!\n\nread_csv is a tool we use to solve the problem of reading CSV files into R.\n\nThe read_csv tools is stored within the readr toolbox (package)."
+  },
+  {
+    "objectID": "intro.html#importing-data-into-r",
+    "href": "intro.html#importing-data-into-r",
+    "title": "1  Introduction",
+    "section": "1.5 Importing Data into R",
+    "text": "1.5 Importing Data into R\n\nNow, while many packages come installed in RStudio automatically, there are far, far more which we have to install from the web, including readr.\nTo install a package, we use the install.packages function:\n\n\n## Installing the readr package ##\ninstall.packages('readr')\n\n\nNow, we can also think of functions like mathematical functions; we have to supply the function with special inputs called arguments in order to get the desired output.\n\nFor instance, in the install.packages function, we had to specify to the function which package we wanted to install.\n\nHow do we know what arguments to specify for a given function?\nThere are lots of different ways, but one way we can do so is by using the ? operator.\n\n\n## What are the arguments of read_csv? ##\n?readr::read_csv\n\n\nAs we can see, there are a lot of arguments we can specify. However, we don’t need to specify most of them.\n\n\n\nAll of the arguments which have an = after them, like “col_names = TRUE”, will retain that specific argument unless you explicitly change it.\n\ncol_names = TRUE means that the columns of the CSV file have names. If they don’t, then we would change it to, col_names = FALSE and the column names will have generic names, (V1, V2, ... , VN)."
+  }
+]
