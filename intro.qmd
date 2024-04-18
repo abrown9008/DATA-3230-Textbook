@@ -41,51 +41,63 @@ In this class, we will be using R as a tool for visualizing categorical and quan
 
 ## Functions in R
 
--   In order to visualize data in R, we need to be able to import data into R.
+In order to visualize data in R, we need to be able to import data into R. There are a variety of ways of importing data into R, but they largely depend on the type of datafile that you are importing (e.g., Excel file, CSV file, text file, etc.). While there are lots of different files which can be imported into R (Google and ChatGPT are excellent resources for searching for code for how to do something), we'll mostly use two types in this class: Excel and CSV
 
--   There are a variety of ways of importing data into R, but they largely depend on the type of datafile that you are importing (e.g., Excel file, CSV file, text file, etc.).
+Let's try importing the `HEART.csv` file into R. This file is part of the famous Framingham Heart Study.
 
--   While there are lots of different files which can be imported into R (Google is an excellent resource for searching for code for how to do something), we're going to focus on two main types: Excel and CSV
+Since we set up our first class session by connecting to GitHub, we should have this file in our project folder already.
 
--   Let's try importing a CSV file into R. This file is part of the famous Framingham Heart Study.
+To read in this CSV file, we will use the `read_csv` function which is part of the `readr` package. Every function in R requires arguments specified inside of parentheses. We can think of packages like toolboxes within a mechanic's workshop. Each toolbox contains different tools. A tool is like a function; we use specific tools (functions) to solve specific problems!
 
--   Since we set up our first class session by connecting to GitHub, we should have this file in our project folder already.
-
--   Now to read in this CSV file, we will use the `read_csv` function which is part of the `readr` package.
-
--   Every function in R requires arguments specified inside of parentheses.
-
--   We can think of packages like toolboxes within a mechanic's workshop. Each toolbox contains different tools.
-
--   A tool is like a function; we use specific tools (functions) to solve specific problems!
-
-    -   `read_csv` is a tool we use to solve the problem of reading CSV files into R.
-
+-   `read_csv` is a tool we use to solve the problem of reading CSV files into R.
 -   The `read_csv` tools is stored within the `readr` toolbox (package).
 
 ## Importing Data into R
 
--   Now, while many packages come installed in RStudio automatically, there are far, far more which we have to install from the web, including `readr`.
--   To install a package, we use the `install.packages` function:
+While many packages come installed in RStudio automatically, there are far, far more which we have to install from the web, including `readr`.
+
+To install a package, we use the `install.packages` function:
 
 ```{r,echo=TRUE,eval=F}
 ## Installing the readr package ##
 install.packages('readr')
 ```
 
--   Now, we can also think of functions like mathematical functions; we have to supply the function with special inputs called [*arguments*]{.underline} in order to get the desired output.
-    -   For instance, in the `install.packages` function, we had to specify to the function which package we wanted to install.
--   How do we know what arguments to specify for a given function?
--   There are lots of different ways, but one way we can do so is by using the `?` operator.
+We can also think of functions like mathematical functions; we have to supply the function with special inputs called [*arguments*]{.underline} in order to get the desired output. For instance, in the `install.packages` function, we had to specify to the function which package we wanted to install.
+
+How do we know what arguments to specify for a given function? There are lots of different ways, but one way we can do so is by using the `?` operator.
 
 ```{r,eval=F}
 ## What are the arguments of read_csv? ##
 ?readr::read_csv
 ```
 
--   As we can see, there are a lot of arguments we can specify. However, we don't need to specify most of them.
+As we can see, there are a lot of arguments we can specify. However, we don't need to specify most of them in this case. All of the arguments which have an `=` after them, like "`col_names = TRUE`", will retain that specific argument unless you explicitly change it. I refer to these as *optional arguments*, those arguments whose value doesn't necessarily need to be changed in order to get the function to execute.
 
-<!-- -->
+To note, `col_names = TRUE` means that the columns of the CSV file have names. If they don't, then we would change it to, `col_names = FALSE` and the column names will have generic names, (`V1, V2, ... , VN`).
 
--   All of the arguments which have an `=` after them, like "`col_names = TRUE`", will retain that specific argument unless you explicitly change it.
-    -   `col_names = TRUE` means that the columns of the CSV file have names. If they don't, then we would change it to, `col_names = FALSE` and the column names will have generic names, (`V1, V2, ... , VN`).
+Conversely, any argument which does not have an already specified value is a *required argument*, or one the user (that's you!) must fill in for the function to execute. In the case of `read_csv`, that required argument is the file path!
+
+```{r}
+library(readr)
+heart <- read_csv("Introduction to R and RStudio/HEART.csv")
+```
+
+What about an Excel file? How do we import those? What if we want to read in the `esoph.xlsx` file? In this case, we can use a function called `read_xlsx` which is part of the package `readxl`. So just as before, we can run:
+
+```{r}
+install.packages('readxl')
+library(readxl)
+esoph <- read_xlsx("Introduction to R and RStudio/esoph.xlsx")
+```
+
+## Exploring Dataframes using R
+
+So far we have imported some datasets into the RStudio environment...how do we know they imported correctly? The best way that I have found which uses a combination of some traditional functions is a function called `glimpse` which is part of an incredibly useful data wrangling package called `dplyr`:
+
+```{r}
+install.packages('dplyr')
+library(dplyr)
+heart |>
+  glimpse()
+```

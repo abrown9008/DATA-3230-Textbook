@@ -6,7 +6,7 @@ This course is designed to teach students not only how to create data visualizat
 
 # Coding Requirements
 
-In this course, I use R programming and specifically elements of the *tidyverse* to teach students how to generate beautiful visualizations using the popular visualization package, *ggplot2*. Now, you may be asking yourself: ***"what if I don't have experience with R programming? Can I still be successful?"***
+In this course, I use R programming and specifically elements of the `tidyverse` to teach students how to generate beautiful visualizations using the popular visualization package, `ggplot2`. Now, you may be asking yourself: ***"what if I don't have experience with R programming? Can I still be successful?"***
 
 The answer is unequivocally, yes! We start from the basics and work our way up to more complex examples, making sure that you have all the relevant code and explanations you need to be successful in this class and beyond.
 
