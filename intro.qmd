@@ -85,8 +85,7 @@ install.packages('readr')
 
 -   As we can see, there are a lot of arguments we can specify. However, we don't need to specify most of them.
 
-```{=html}
 <!-- -->
-```
+
 -   All of the arguments which have an `=` after them, like "`col_names = TRUE`", will retain that specific argument unless you explicitly change it.
     -   `col_names = TRUE` means that the columns of the CSV file have names. If they don't, then we would change it to, `col_names = FALSE` and the column names will have generic names, (`V1, V2, ... , VN`).

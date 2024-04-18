@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DATA 3230 - Data Visualization - 1&nbsp; Introduction</title>
+<title>DATA 3230 - Data Visualization - 2&nbsp; Summary</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./summary.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./summary.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -141,13 +141,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+  <a href="./summary.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
   </div>
 </li>
@@ -163,24 +163,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#why-use-r" id="toc-why-use-r" class="nav-link active" data-scroll-target="#why-use-r"><span class="header-section-number">1.1</span> Why Use R?</a></li>
-  <li><a href="#so-what-is-r" id="toc-so-what-is-r" class="nav-link" data-scroll-target="#so-what-is-r"><span class="header-section-number">1.2</span> So What is R?</a></li>
-  <li><a href="#what-can-r-do" id="toc-what-can-r-do" class="nav-link" data-scroll-target="#what-can-r-do"><span class="header-section-number">1.3</span> What Can R Do?</a></li>
-  <li><a href="#functions-in-r" id="toc-functions-in-r" class="nav-link" data-scroll-target="#functions-in-r"><span class="header-section-number">1.4</span> Functions in R</a></li>
-  <li><a href="#importing-data-into-r" id="toc-importing-data-into-r" class="nav-link" data-scroll-target="#importing-data-into-r"><span class="header-section-number">1.5</span> Importing Data into R</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></h1>
 </div>
 
 
@@ -195,98 +185,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="why-use-r" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="why-use-r"><span class="header-section-number">1.1</span> Why Use R?</h2>
-<p>You may be asking yourself, out of all of the possible visualization softwares which exist, why should I spend time learning and using R?</p>
-<p>Great question!</p>
-<p>R is a useful tool and worthwhile to learn for several reasons:</p>
-<ol type="1">
-<li>It’s free!</li>
-<li>Because it’s open source, thousands of people have contributed packages and functions at a pace that proprietary softwares can’t compete with</li>
-<li>It is very flexible and robust meaning there’s a lot you can do with it (including creating this very website!)</li>
-<li>It is becoming widely used across many industries</li>
-<li>We can create visualizations and perform quantitative analyses in the same system.</li>
-</ol>
-</section>
-<section id="so-what-is-r" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="so-what-is-r"><span class="header-section-number">1.2</span> So What is R?</h2>
-<p>R is a command-line, object-oriented programming language commonly used for data analysis and statistics.</p>
-<p><strong>Command-line</strong> means that we have to give R commands in order for us to get it to do something. So for instance, if we wanted to know what the sum of 3 and 5 were, we can use R to solve this problem for us:</p>
+<p>In summary, this book has no content whatsoever.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Adding 3 &amp; 5 Together: ##</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8</code></pre>
+<pre><code>[1] 2</code></pre>
 </div>
 </div>
-<p><strong>Object-oriented</strong> means that we can save individual pieces of output as some name that we can use later. This is a super handy feature, especially when you have complicated scripts!</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Saving the result of 3 + 5 as a ##</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">5</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8</code></pre>
-</div>
-</div>
-</section>
-<section id="what-can-r-do" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="what-can-r-do"><span class="header-section-number">1.3</span> What Can R Do?</h2>
-<p>What can R do? Well, for the purpose of data analytics, I am yet to find a limit of what it can do!</p>
-<p>In this class, we will be using R as a tool for visualizing categorical and quantitative data through various means.</p>
-</section>
-<section id="functions-in-r" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="functions-in-r"><span class="header-section-number">1.4</span> Functions in R</h2>
-<ul>
-<li><p>In order to visualize data in R, we need to be able to import data into R.</p></li>
-<li><p>There are a variety of ways of importing data into R, but they largely depend on the type of datafile that you are importing (e.g., Excel file, CSV file, text file, etc.).</p></li>
-<li><p>While there are lots of different files which can be imported into R (Google is an excellent resource for searching for code for how to do something), we’re going to focus on two main types: Excel and CSV</p></li>
-<li><p>Let’s try importing a CSV file into R. This file is part of the famous Framingham Heart Study.</p></li>
-<li><p>Since we set up our first class session by connecting to GitHub, we should have this file in our project folder already.</p></li>
-<li><p>Now to read in this CSV file, we will use the <code>read_csv</code> function which is part of the <code>readr</code> package.</p></li>
-<li><p>Every function in R requires arguments specified inside of parentheses.</p></li>
-<li><p>We can think of packages like toolboxes within a mechanic’s workshop. Each toolbox contains different tools.</p></li>
-<li><p>A tool is like a function; we use specific tools (functions) to solve specific problems!</p>
-<ul>
-<li><code>read_csv</code> is a tool we use to solve the problem of reading CSV files into R.</li>
-</ul></li>
-<li><p>The <code>read_csv</code> tools is stored within the <code>readr</code> toolbox (package).</p></li>
-</ul>
-</section>
-<section id="importing-data-into-r" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="importing-data-into-r"><span class="header-section-number">1.5</span> Importing Data into R</h2>
-<ul>
-<li>Now, while many packages come installed in RStudio automatically, there are far, far more which we have to install from the web, including <code>readr</code>.</li>
-<li>To install a package, we use the <code>install.packages</code> function:</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Installing the readr package ##</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'readr'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>Now, we can also think of functions like mathematical functions; we have to supply the function with special inputs called <u><em>arguments</em></u> in order to get the desired output.
-<ul>
-<li>For instance, in the <code>install.packages</code> function, we had to specify to the function which package we wanted to install.</li>
-</ul></li>
-<li>How do we know what arguments to specify for a given function?</li>
-<li>There are lots of different ways, but one way we can do so is by using the <code>?</code> operator.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## What are the arguments of read_csv? ##</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>?readr<span class="sc">::</span>read_csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>As we can see, there are a lot of arguments we can specify. However, we don’t need to specify most of them.</li>
-</ul>
-<!-- -->
-<ul>
-<li>All of the arguments which have an <code>=</code> after them, like “<code>col_names = TRUE</code>”, will retain that specific argument unless you explicitly change it.
-<ul>
-<li><code>col_names = TRUE</code> means that the columns of the CSV file have names. If they don’t, then we would change it to, <code>col_names = FALSE</code> and the column names will have generic names, (<code>V1, V2, ... , VN</code>).</li>
-</ul></li>
-</ul>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -524,13 +431,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./intro.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./summary.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

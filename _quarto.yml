@@ -1,8 +1,9 @@
 project:
   type: book
+  output-dir: docs
 
 book:
-  title: "DATA 3230"
+  title: "DATA 3230 - Data Visualization"
   author: "Dr Austin R Brown"
   date: "Fall 2024"
   chapters:
