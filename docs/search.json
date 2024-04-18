@@ -40,5 +40,12 @@
     "title": "2  Summary",
     "section": "",
     "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DATA 3230 - Data Visualization",
+    "section": "",
+    "text": "Preface\nWelcome to DATA 3230 - Data Visualization! My name is Dr Austin Brown and I am a faculty member in the School of Data Science and Analytics at Kennesaw State University.\nThis course is designed to teach students not only how to create data visualizations, but how to create them in an appropriate and aesthetically pleasing manner.\n\n\nCoding Requirements\nIn this course, I use R programming and specifically elements of the tidyverse to teach students how to generate beautiful visualizations using the popular visualization package, ggplot2. Now, you may be asking yourself: “what if I don’t have experience with R programming? Can I still be successful?”\nThe answer is unequivocally, yes! We start from the basics and work our way up to more complex examples, making sure that you have all the relevant code and explanations you need to be successful in this class and beyond.\nAll I ask is that along the way, if you run into issues, be sure to ask for help! That’s what I’m here for!\nSo if you’re ready to learn how to tell stories with data through a visual medium, come along with me!"
   }
 ]
