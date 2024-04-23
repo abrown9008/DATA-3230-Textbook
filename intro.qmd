@@ -85,8 +85,13 @@ heart <- read_csv("Introduction to R and RStudio/HEART.csv")
 
 What about an Excel file? How do we import those? What if we want to read in the `esoph.xlsx` file? In this case, we can use a function called `read_xlsx` which is part of the package `readxl`. So just as before, we can run:
 
-```{r}
+```{r,eval=F}
 install.packages('readxl')
+library(readxl)
+esoph <- read_xlsx("Introduction to R and RStudio/esoph.xlsx")
+```
+
+```{r,echo=F}
 library(readxl)
 esoph <- read_xlsx("Introduction to R and RStudio/esoph.xlsx")
 ```
@@ -95,8 +100,14 @@ esoph <- read_xlsx("Introduction to R and RStudio/esoph.xlsx")
 
 So far we have imported some datasets into the RStudio environment...how do we know they imported correctly? The best way that I have found which uses a combination of some traditional functions is a function called `glimpse` which is part of an incredibly useful data wrangling package called `dplyr`:
 
-```{r}
+```{r,eval=F}
 install.packages('dplyr')
+library(dplyr)
+heart |>
+  glimpse()
+```
+
+```{r,echo=F}
 library(dplyr)
 heart |>
   glimpse()
@@ -128,3 +139,19 @@ Sex, for example, we can imagine is a categorical variable as its values, male a
     -   We can tell R read it in as a quantitative variable because it is coded as double (notice the `<dbl>` to the right of the Height variable name).
 
 ## Examining Subsets of Dataframes
+
+Let's say I wanted to find the average or mean Age at Death from the Heart dataframe. How would I go about doing that?
+
+First, I need to know how to isolate that single variable by itself. To do this, we make use of the dollar-sign operator after the name of our dataframe.
+
+You can think of the dollar-sign operator like a door to your home. The name of the dataframe is the house itself, the dollar-sign is the door, and the variable name is the person we want to talk to inside of the house.
+
+So the structure is: House\$Person
+
+If we enter the following command into our console, we can see that we have returned to us the observations contained withing the Age at Death column:
+
+```{r}
+heart$AgeAtDeath
+```
+
+So now that we know how to isolate a single variable within a dataframe, let's try finding the mean of this quantitative variable
