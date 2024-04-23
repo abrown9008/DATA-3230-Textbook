@@ -101,3 +101,30 @@ library(dplyr)
 heart |>
   glimpse()
 ```
+
+As we visually inspect the first few rows of the HEART dataframe, we can see that the "Sex" variable appears to be [*categorical*]{.underline} whereas the "Weight" variable appears to be [*quantitative*]{.underline}.
+
+-   A **quantitative** variable is something which can be measured with a number, like dollars, time, height, weight, blood pressure, etc. R refers to these as "numeric" variables.
+-   A **categorical** variable is just the opposite. It is something which cannot be quantified and is more of a quality. These are things like sex, country of origin, hair color, cause of death etc. R refers to these as "character" variables.
+
+You may be asking yourself, "why does this matter?" It's important for two primary reasons:
+
+1.  The type of variable we are working with dictates to us which visualization methods would be most appropriate.
+2.  In terms of R programming, we can look at the variable "Sex" and "Height" in the heart dataframe and conclude that these are categorical and quantitative variables, respectively. But when we read the heart dataframe into R using `readr::read_csv`, we didn't have to tell R what types of variables each column was; it by default scans each column and makes a best guess as to what type of variable the column contains.
+    -   So how can we know that R properly recognized the variables in the heart dataframe?
+    -   Let's take a `glimpse`!
+
+```{r}
+heart |>
+  glimpse()
+```
+
+Sex, for example, we can imagine is a categorical variable as its values, male and female, are characteristics and not numbers.
+
+-   We can tell R read it in as a categorical variable because it is coded as character (notice the `<chr>` to the right of the Sex variable name).
+
+-   Height, on the other hand, we can imagine is a quantitative variable as its values are numbers!
+
+    -   We can tell R read it in as a quantitative variable because it is coded as double (notice the `<dbl>` to the right of the Height variable name).
+
+## Examining Subsets of Dataframes
