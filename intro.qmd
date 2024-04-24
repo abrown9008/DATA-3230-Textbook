@@ -140,13 +140,15 @@ Sex, for example, we can imagine is a categorical variable as its values, male a
 
 ## Examining Subsets of Dataframes
 
-Let's say I wanted to find the average or mean Age at Death from the Heart dataframe. How would I go about doing that?
+### Single Variable Analysis
+
+Let's say I wanted to find the average or mean Age at Death from the `heart` dataframe. How would I go about doing that?
 
 First, I need to know how to isolate that single variable by itself. To do this, we make use of the dollar-sign operator after the name of our dataframe.
 
 You can think of the dollar-sign operator like a door to your home. The name of the dataframe is the house itself, the dollar-sign is the door, and the variable name is the person we want to talk to inside of the house.
 
-So the structure is: House\$Person
+So the structure is: `House$Person`
 
 If we enter the following command into our console, we can see that we have returned to us the observations contained withing the Age at Death column:
 
@@ -154,4 +156,56 @@ If we enter the following command into our console, we can see that we have retu
 heart$AgeAtDeath
 ```
 
-So now that we know how to isolate a single variable within a dataframe, let's try finding the mean of this quantitative variable
+So now that we know how to isolate a single variable within a dataframe, let's try finding the mean of this quantitative variable using the below code:
+
+```{r}
+mean(heart$AgeAtDeath)
+```
+
+What is returned to us in `NA` meaning "Not-Applicable." How does this make any sense? Sometimes, when I get output that is different than what I'm expecting, I check the documentation to see if there are any arguments within the given function that might need changed to have the function return output I expect. Remember, we can do that with the `?` operator:
+
+```{r,eval=F}
+?mean
+```
+
+What we find in the documentation is the structure of the function, just like we saw for `read_csv`. Here, the structure of `mean` is:
+
+```         
+mean(x, trim = 0, na.rm = FALSE, ...)
+```
+
+Below, we can see the descriptions of each argument. When we examine `na.rm` it states: "a logical evaluating to `TRUE` or `FALSE` indicating whether `NA` values should be stripped before the computation proceeds."
+
+So in other words, if a numeric column contains missing values and we try to calculate the mean of said column, when the mean function approaches a missing value, it simply doesn't know what to do with it. This makes sense as a missing value could be anything (0, 1000, $pi$, or anything else!). So instead of trying to guess what the value is, it just returns `NA`. To have it just omit the missing values to have the function return to us the sample mean, we need to run the code:
+
+```{r}
+mean(heart$AgeAtDeath,na.rm=T)
+```
+
+Now we get a result from the function that makes more sense!
+
+### Selecting Subsets of Columns
+
+Let's say I have a large dataframe with lots of columns, as you might see in your own fields of study. But, for whatever analysis I'm wanting to do, I don't need all of the columns, just a few. In such a case, it might be useful to subset the dataframe and select only the columns we need.
+
+How do we go about doing this? Like many things in R, there are a few different ways to yield the same result, but I'm going to show you what I consider the most straightforward method, which uses the `dplyr` package.
+
+Using the `heart` dataframe, suppose I want to create a new dataframe which only contains the last four columns: Chol_Status, BP_Status, Weight_Status, and Smoking_Status. To do this, we will use the `select` function from within the `dplyr` package.
+
+```{r}
+heart_status <- heart |>
+  select(Chol_Status,BP_Status,
+         Weight_Status,Smoking_Status)
+
+heart_status |>
+  glimpse()
+```
+
+Okay, great! But what if we instead wanted to subset the `heart` dataframe by characteristics of the rows, instead? For example, let's say in the new `heart_status` dataframe we just created, we want to create a new dataframe where we only have those participants whose `Weight_Status` is "Overweight." To do this, we can now instead use the `filter` function which is also contained within the powerful and useful `dplyr` package:
+
+```{r}
+heart_status_ow <- heart_status |>
+  filter(Weight_Status == 'Overweight')
+```
+
+If you're familiar with SQL, `dplyr` operates in much the same manner. So most anything we can do from a data wrangling perspective with SQL, we can also with `dplyr`.
