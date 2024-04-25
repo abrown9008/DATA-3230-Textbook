@@ -95,6 +95,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -160,7 +162,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#functions-in-r" id="toc-functions-in-r" class="nav-link" data-scroll-target="#functions-in-r"><span class="header-section-number">1.4</span> Functions in R</a></li>
   <li><a href="#importing-data-into-r" id="toc-importing-data-into-r" class="nav-link" data-scroll-target="#importing-data-into-r"><span class="header-section-number">1.5</span> Importing Data into R</a></li>
   <li><a href="#exploring-dataframes-using-r" id="toc-exploring-dataframes-using-r" class="nav-link" data-scroll-target="#exploring-dataframes-using-r"><span class="header-section-number">1.6</span> Exploring Dataframes using R</a></li>
-  <li><a href="#examining-subsets-of-dataframes" id="toc-examining-subsets-of-dataframes" class="nav-link" data-scroll-target="#examining-subsets-of-dataframes"><span class="header-section-number">1.7</span> Examining Subsets of Dataframes</a></li>
+  <li><a href="#examining-subsets-of-dataframes" id="toc-examining-subsets-of-dataframes" class="nav-link" data-scroll-target="#examining-subsets-of-dataframes"><span class="header-section-number">1.7</span> Examining Subsets of Dataframes</a>
+  <ul class="collapse">
+  <li><a href="#single-variable-analysis" id="toc-single-variable-analysis" class="nav-link" data-scroll-target="#single-variable-analysis"><span class="header-section-number">1.7.1</span> Single Variable Analysis</a></li>
+  <li><a href="#selecting-subsets-of-columns" id="toc-selecting-subsets-of-columns" class="nav-link" data-scroll-target="#selecting-subsets-of-columns"><span class="header-section-number">1.7.2</span> Selecting Subsets of Columns</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -305,7 +311,7 @@ $ Smoking_Status &lt;chr&gt; "Non-smoker", "Non-smoker", "Moderate (6-15)", "Non
 <li>In terms of R programming, we can look at the variable “Sex” and “Height” in the heart dataframe and conclude that these are categorical and quantitative variables, respectively. But when we read the heart dataframe into R using <code>readr::read_csv</code>, we didn’t have to tell R what types of variables each column was; it by default scans each column and makes a best guess as to what type of variable the column contains.
 <ul>
 <li>So how can we know that R properly recognized the variables in the heart dataframe?</li>
-<li>Let’s take a <code>glimpse</code>!</li>
+<li>Let’s take a second <code>glimpse</code>!</li>
 </ul></li>
 </ol>
 <div class="cell">
@@ -344,8 +350,74 @@ $ Smoking_Status &lt;chr&gt; "Non-smoker", "Non-smoker", "Moderate (6-15)", "Non
 </section>
 <section id="examining-subsets-of-dataframes" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="examining-subsets-of-dataframes"><span class="header-section-number">1.7</span> Examining Subsets of Dataframes</h2>
+<section id="single-variable-analysis" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="single-variable-analysis"><span class="header-section-number">1.7.1</span> Single Variable Analysis</h3>
+<p>Let’s say I wanted to find the average or mean Age at Death from the <code>heart</code> dataframe. How would I go about doing that?</p>
+<p>First, I need to know how to isolate that single variable by itself. To do this, we make use of the dollar-sign operator after the name of our dataframe.</p>
+<p>You can think of the dollar-sign operator like a door to your home. The name of the dataframe is the house itself, the dollar-sign is the door, and the variable name is the person we want to talk to inside of the house.</p>
+<p>So the structure is: <code>House$Person</code></p>
+<p>If we enter the following command into our console, we can see that we have returned to us the observations contained withing the Age at Death column:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>heart<span class="sc">$</span>AgeAtDeath</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 55 57 NA NA NA NA NA 77 NA 82</code></pre>
+</div>
+</div>
+<p>So now that we know how to isolate a single variable within a dataframe, let’s try finding the mean of this quantitative variable using the below code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(heart<span class="sc">$</span>AgeAtDeath)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] NA</code></pre>
+</div>
+</div>
+<p>What is returned to us in <code>NA</code> meaning “Not-Applicable.” How does this make any sense? Sometimes, when I get output that is different than what I’m expecting, I check the documentation to see if there are any arguments within the given function that might need changed to have the function return output I expect. Remember, we can do that with the <code>?</code> operator:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>?mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What we find in the documentation is the structure of the function, just like we saw for <code>read_csv</code>. Here, the structure of <code>mean</code> is:</p>
+<pre><code>mean(x, trim = 0, na.rm = FALSE, ...)</code></pre>
+<p>Below, we can see the descriptions of each argument. When we examine <code>na.rm</code> it states: “a logical evaluating to <code>TRUE</code> or <code>FALSE</code> indicating whether <code>NA</code> values should be stripped before the computation proceeds.”</p>
+<p>So in other words, if a numeric column contains missing values and we try to calculate the mean of said column, when the mean function approaches a missing value, it simply doesn’t know what to do with it. This makes sense as a missing value could be anything (0, 1000, <span class="math inline">\(\pi\)</span>, or anything else!). So instead of trying to guess what the value is, it just returns <code>NA</code>. To have it just omit the missing values to have the function return to us the sample mean, we need to run the code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(heart<span class="sc">$</span>AgeAtDeath,<span class="at">na.rm=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 70.53641</code></pre>
+</div>
+</div>
+<p>Now we get a result from the function that makes more sense!</p>
+</section>
+<section id="selecting-subsets-of-columns" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="selecting-subsets-of-columns"><span class="header-section-number">1.7.2</span> Selecting Subsets of Columns</h3>
+<p>Let’s say I have a large dataframe with lots of columns, as you might see in your own fields of study. But, for whatever analysis I’m wanting to do, I don’t need all of the columns, just a few. In such a case, it might be useful to subset the dataframe and select only the columns we need.</p>
+<p>How do we go about doing this? Like many things in R, there are a few different ways to yield the same result, but I’m going to show you what I consider the most straightforward method, which uses the <code>dplyr</code> package.</p>
+<p>Using the <code>heart</code> dataframe, suppose I want to create a new dataframe which only contains the last four columns: Chol_Status, BP_Status, Weight_Status, and Smoking_Status. To do this, we will use the <code>select</code> function from within the <code>dplyr</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>heart_status <span class="ot">&lt;-</span> heart <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Chol_Status,BP_Status,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>         Weight_Status,Smoking_Status)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>heart_status <span class="sc">|&gt;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 5,209
+Columns: 4
+$ Chol_Status    &lt;chr&gt; NA, "Desirable", "High", "High", "High", "Desirable", "…
+$ BP_Status      &lt;chr&gt; "Normal", "High", "High", "Normal", "Optimal", "High", …
+$ Weight_Status  &lt;chr&gt; "Overweight", "Overweight", "Overweight", "Overweight",…
+$ Smoking_Status &lt;chr&gt; "Non-smoker", "Non-smoker", "Moderate (6-15)", "Non-smo…</code></pre>
+</div>
+</div>
+<p>Okay, great! But what if we instead wanted to subset the <code>heart</code> dataframe by characteristics of the rows, instead? For example, let’s say in the new <code>heart_status</code> dataframe we just created, we want to create a new dataframe where we only have those participants whose <code>Weight_Status</code> is “Overweight.” To do this, we can now instead use the <code>filter</code> function which is also contained within the powerful and useful <code>dplyr</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>heart_status_ow <span class="ot">&lt;-</span> heart_status <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Weight_Status <span class="sc">==</span> <span class="st">'Overweight'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you’re familiar with SQL, <code>dplyr</code> operates in much the same manner. So most anything we can do from a data wrangling perspective with SQL, we can also with <code>dplyr</code>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
