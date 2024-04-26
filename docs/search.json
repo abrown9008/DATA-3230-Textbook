@@ -103,5 +103,12 @@
     "title": "2  Problems and Principles in Communicating Data",
     "section": "2.6 Summary",
     "text": "2.6 Summary\nIn sum, while knowing how to create various types of visualizations is a wonderful skill, it is better to know how to create effective visualizations.\nThroughout this course, we will explore specific ways of doing this very thing and also think critically about what effectivenss means in specific situations.\nNext, let’s learn how we can use R, and specifically the ggplot2 package, to build quality visualizations to answer research questions…"
+  },
+  {
+    "objectID": "how_much.html#introduction",
+    "href": "how_much.html#introduction",
+    "title": "3  Communicating How Much",
+    "section": "3.1 Introduction",
+    "text": "3.1 Introduction\nIn this section, we are going to be learning about existing methods which help us visually communicate, “How Much?”\n“How much?” types of visualizations make use of quantitative variables, which are like:\n\n“How much money did we earn this past quarter?”\n“How much carbon dioxide is in the atmosphere?”\n“How much time do undergraduate students in Georgia spend on social media sites per day?”\n\nIn this section, we are doing to focus on answering “How Much?” types of questions using a single (or univariate) quantitative variable.\nQuantitative variables, as we learned in the prior section, which are measured are things like revenue, weight, distance, and time, among many, many others. Generally, here, our data source would need to be in aggregate form, so that a single record exists. For instance:\n\nA sales order generating revenues of $95\nA shipment weighing 5.2 pounds\nA flight covering a distance of 2,408 miles"
   }
 ]

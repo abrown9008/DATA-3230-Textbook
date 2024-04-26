@@ -1,0 +1,19 @@
+# Communicating How Much
+
+## Introduction
+
+In this section, we are going to be learning about existing methods which help us visually communicate, "How Much?"
+
+"How much?" types of visualizations make use of quantitative variables, which are \textit{measured} like:
+
+-   "How much money did we earn this past quarter?"
+-   "How much carbon dioxide is in the atmosphere?"
+-   "How much time do undergraduate students in Georgia spend on social media sites per day?"
+
+In this section, we are doing to focus on answering "How Much?" types of questions using a single (or univariate) *quantitative* variable.
+
+Quantitative variables, as we learned in the prior section, which are measured are things like revenue, weight, distance, and time, among many, many others. Generally, here, our data source would need to be in aggregate form, so that a single record exists. For instance:
+
+-   A sales order generating revenues of \$95
+-   A shipment weighing 5.2 pounds
+-   A flight covering a distance of 2,408 miles
