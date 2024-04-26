@@ -21,3 +21,7 @@ Some of the content I use to teach this course comes from:
 1.  [Communicating Data with Tableau](https://www.oreilly.com/library/view/communicating-data-with/9781449372019/) by Ben Jones
 2.  [R for Data Science 2nd Edition](https://r4ds.hadley.nz/) by Hadley Wickham, Mine Cetinkaya-Rundel, and Garrett Grolemund
 3.  [R Graphics Cookbook 2nd Edition](https://r-graphics.org/) by Winston Chang
+
+# Accessing Content
+
+All of the content for the course, including code and datasets, can be found at my [GitHub repo](https://github.com/abrown9008/DATA-3230-Data-Visualization) for this course.
