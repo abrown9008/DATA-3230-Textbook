@@ -84,7 +84,7 @@ trash_tot |>
        subtitle = "September 2011")
 ```
 
-###  Reordering the Bars in Descending Order Based on Numeric Value
+### Reordering the Bars in Descending Order Based on Numeric Value
 
 ```{r}
 trash_tot |>
