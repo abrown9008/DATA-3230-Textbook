@@ -365,7 +365,7 @@ trash_tot |>
                                                    scale = 1e-3))
 ```
 
-We can also control the position of the legend within the visualization through the `legend.position` argument within the `theme` function:
+We can also control the position of the legend within the visualization through the `legend.position` argument within the `theme` function (default is `legend.position='right'`):
 
 ```{r}
 ## Top ##
@@ -420,4 +420,156 @@ trash_tot |>
                      breaks = seq(0,80000,by=10000),
                      labels = scales::label_number(suffix = "K",
                                                    scale = 1e-3))
+```
+
+### Changing Color Palettes
+
+#### Viridis
+
+In the above plot, the generated colors are the defaults. We can change the palette we use either manually or by using palettes within packages such as `viridis`, which provides colorblind-friendly palettes.
+
+```{r}
+library(viridis)
+
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank(),
+        legend.position = "bottom") +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3)) +
+  scale_fill_viridis(discrete = T)
+```
+
+Within `scale_fill_viridis`, we have eight different palettes we can specify (A - H). So for example, if I want to employ the "turbo" option ("H"):
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank(),
+        legend.position = "bottom") +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3)) +
+  scale_fill_viridis(discrete = T,
+                     option = "H")
+```
+
+#### RColorBrewer
+
+The `RColorBrewer` package also provides a nice list of palettes we can use to customize our visualization. Let's take a look at all of our possibilities:
+
+```{r}
+library(RColorBrewer)
+display.brewer.all()
+```
+
+The first set of palettes are best for quantitative data.
+
+The third set are best for quantitative data with clear extremes.
+
+The middle set is what would be most appropriate for us: the qualitative palettes.
+
+Let's try `Pastel1`:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank(),
+        legend.position = "bottom") +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3)) +
+  scale_fill_brewer(palette = "Pastel1")
+```
+
+#### Custom Palettes
+
+Being able to use existing color palettes in R packages like `viridis` and `RColorBrewer` are nice! But there may be instances where we need to use a custom palette (consider colors for branding!).
+
+To do this, we will employ the `scale_fill_manual` function after creating a vector called `borough_colors` which specifies which borough is assigned which specific color. Note, we can also use hex colors here rather than these specific named colors.
+
+```{r}
+borough_colors <- c("Bronx" = 'red',
+                    "Brooklyn" = 'blue',
+                    "Manhattan" = "orange",
+                    "Queens" = "yellow",
+                    "Staten Island" = 'violet')
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank(),
+        legend.position = "bottom") +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3)) +
+  scale_fill_manual(values = borough_colors)
+
 ```
