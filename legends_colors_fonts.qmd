@@ -493,16 +493,16 @@ trash_tot |>
 
 The `RColorBrewer` package also provides a nice list of palettes we can use to customize our visualization. Let's take a look at all of our possibilities:
 
-```{r,out.height="120%"}
+```{r}
 library(RColorBrewer)
-display.brewer.all()
+print(brewer.pal.info)
 ```
 
-The first set of palettes are best for quantitative data.
+The first set of palettes (labeled "div") are best for quantitative data.
 
-The third set are best for quantitative data with clear extremes.
+The third set (labeled "seq") are best for quantitative data with clear extremes.
 
-The middle set is what would be most appropriate for us: the qualitative palettes.
+The middle set (labeled "qual") is what would be most appropriate for us: the qualitative palettes.
 
 Let's try `Pastel1`:
 
