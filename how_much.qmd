@@ -119,8 +119,8 @@ Note, it is also very common to display bar charts in a *horizontal* manner rat
 trash_tot |>
   ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
   geom_bar(stat='identity',color='black',fill='white') +
-  labs(x = "NYC Borough",
-       y = "Total Refuse Collected (in tons)",
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
        title = "Trash Collectd in NYC by Borough",
        subtitle = "September 2011") +
   theme_classic()
@@ -171,8 +171,8 @@ This better! And just like with the bar chart, we can convert our vertical dot c
 trash_tot |>
   ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
   geom_point(color='blue',fill='blue',size=3) +
-  labs(x="NYC Borough",
-       y="Total Refuse Collected (in tons)",
+  labs(y="NYC Borough",
+       x="Total Refuse Collected (in tons)",
        title="Trash Collected in NYC by Borough",
        subtitle="September 2011") +
   theme_classic()
@@ -192,8 +192,8 @@ trash_tot |>
   geom_point(color='blue',fill='blue',size=3) +
   geom_segment(aes(yend=BOROUGH),xend=0,color='gray',
                linetype='dashed') +
-  labs(x="NYC Borough",
-       y="Total Refuse Collected (in tons)",
+  labs(y="NYC Borough",
+       x="Total Refuse Collected (in tons)",
        title="Trash Collected in NYC by Borough",
        subtitle="September 2011") +
   theme_classic() 

@@ -11,6 +11,7 @@ book:
     - intro.qmd
     - communicating_data.qmd
     - how_much.qmd
+    - legends_colors_fonts.qmd
 
 bibliography: references.bib
 

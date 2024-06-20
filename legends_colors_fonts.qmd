@@ -1,0 +1,121 @@
+---
+
+---
+
+# Using Legends, Colors, Fonts, and Axes to Improve Visualizations
+
+## Introduction
+
+In the last section, we learned how to use bar charts and dot charts to help communicate "how much" of something that has been observed between categorical groups.
+
+As we saw, we can make small modifications to our `ggplot2` code to substantially improve the interpretability and aesthetic quality of the visualization using things like color and plot themes.
+
+In this section, we're going to take that a step further by learning how we can leverage `ggplot2` code to create and modify legends and elements of our axes, use a variety of colors, color palettes, text and fonts.
+
+Let's begin by using some text to improve our NYC Garbage visualization:
+
+## Annotating Visualizations with Text
+
+Recall where we left off with our horizontal bar chart:
+
+```{r,echo=F,warning=F,message=F}
+library(tidyverse)
+library(readxl)
+## To answer this question, let's first read in the data ##
+nyc <- read_xlsx("Communicating How Much/NYC Trash Data.xlsx")
+## Subset to September 2011 ##
+nyc_sept11 <- nyc |>
+  filter(MONTH == 9 & YEAR == 2011)
+## Sum up REFUSETONSCOLLECTED variable by Borough ##
+trash_tot <- nyc_sept11 |>
+  group_by(BOROUGH) |>
+  summarize(Sum_Trash = sum(REFUSETONSCOLLECTED))
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collectd in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic()
+```
+
+We can generally see from this visualization that Staten Island produced the least amount of garbage for the month of September 2011 and Brooklyn produced the most.
+
+We can also generally determine the amount of garbage collected. For instance, Staten Island was generally around 20K tons, whereas Queens and Brooklyn were somewhat more than 60K tons.
+
+It might be helpful if we put the actual amount associated with each borough on the bars themselves to increase the amount of information the reader can glean from the visualization.
+
+To do this, we can make use of a new geom: `geom_text`
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=Sum_Trash)) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic()
+```
+
+Okay cool! But what is the most obvious problem?
+
+The label is centered at the end of the bar, making the text difficult to read. We can change the justification of the text by using the `hjust` argument. This argument allows us to horizontally adjust the alignment of our text labels. `hjust` can assume a value between 0 and 1 with a value of 0 implying complete right justification and a value of 1 implying complete left justification.
+
+Note, `hjust` and its counterpart `vjust` can assume values outside of this interval if we want to move our labels further away from the point they are anchored upon.
+
+Let's try `hjust = 1` to move the text labels inside of the bars:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=Sum_Trash),hjust = 1) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic()
+```
+
+Looks better! But now notice that the label itself is rounded to just one decimal place, which seems unusual. We can fix this, and also move the label more inside of the bar, directly within `geom_text`
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),hjust=1.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic()
+```
+
+### Modifying Font Characteristics
+
+Our visualization is much improved over what we had originally created! But consider the font style. Right now, our visualization uses a sans serif style font in a black color by default.
+
+What if we wanted to change that?
+
+#### Font Family
+
+While we can specify a wide variety of fonts, the main three guaranteed to work everywhere in a `ggplot2` visualization are sans (default), serif (like Times New Roman), and mono (like typewriter font):
+
+```{r}
+df <- data.frame(x = 1, y = 3:1, family = c("sans", "serif", "mono"))
+ggplot(df, aes(x, y)) + 
+  geom_text(aes(label = family, family = family))
+```
+
+#### Font Face
+
+We can also make our fonts, **bold**, *italic*, ***bold.italic**,* or plain:
+
+```{r}
+df <- data.frame(x = 1:4, fontface = c("plain", "bold", "italic", "bold.italic"))
+ggplot(df, aes(1, x)) + 
+  geom_text(aes(label = fontface, fontface = fontface))
+```
