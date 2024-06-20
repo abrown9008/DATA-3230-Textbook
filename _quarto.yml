@@ -4,13 +4,18 @@ project:
 
 book:
   title: "DATA 3230 - Data Visualization"
+  reader-mode: true
   author: "Dr Austin R Brown"
   date: "Fall 2024"
   chapters:
     - index.qmd
+    
     - intro.qmd
+    
     - communicating_data.qmd
+    
     - how_much.qmd
+    
     - legends_colors_fonts.qmd
 
 bibliography: references.bib

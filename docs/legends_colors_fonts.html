@@ -159,6 +159,13 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">DATA 3230 - Data Visualization</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -822,45 +829,76 @@ window.Quarto = {
 <p>The <code>RColorBrewer</code> package also provides a nice list of palettes we can use to customize our visualization. Let’s take a look at all of our possibilities:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">display.brewer.all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="legends_colors_fonts_files/figure-html/unnamed-chunk-21-1.png" style="height:200.0%" width="672" class="figure-img"></p>
-</figure>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(brewer.pal.info)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         maxcolors category colorblind
+BrBG            11      div       TRUE
+PiYG            11      div       TRUE
+PRGn            11      div       TRUE
+PuOr            11      div       TRUE
+RdBu            11      div       TRUE
+RdGy            11      div      FALSE
+RdYlBu          11      div       TRUE
+RdYlGn          11      div      FALSE
+Spectral        11      div      FALSE
+Accent           8     qual      FALSE
+Dark2            8     qual       TRUE
+Paired          12     qual       TRUE
+Pastel1          9     qual      FALSE
+Pastel2          8     qual      FALSE
+Set1             9     qual      FALSE
+Set2             8     qual       TRUE
+Set3            12     qual      FALSE
+Blues            9      seq       TRUE
+BuGn             9      seq       TRUE
+BuPu             9      seq       TRUE
+GnBu             9      seq       TRUE
+Greens           9      seq       TRUE
+Greys            9      seq       TRUE
+Oranges          9      seq       TRUE
+OrRd             9      seq       TRUE
+PuBu             9      seq       TRUE
+PuBuGn           9      seq       TRUE
+PuRd             9      seq       TRUE
+Purples          9      seq       TRUE
+RdPu             9      seq       TRUE
+Reds             9      seq       TRUE
+YlGn             9      seq       TRUE
+YlGnBu           9      seq       TRUE
+YlOrBr           9      seq       TRUE
+YlOrRd           9      seq       TRUE</code></pre>
 </div>
 </div>
-</div>
-<p>The first set of palettes are best for quantitative data.</p>
-<p>The third set are best for quantitative data with clear extremes.</p>
-<p>The middle set is what would be most appropriate for us: the qualitative palettes.</p>
+<p>The first set of palettes (labeled “div”) are best for quantitative data.</p>
+<p>The third set (labeled “seq”) are best for quantitative data with clear extremes.</p>
+<p>The middle set (labeled “qual”) is what would be most appropriate for us: the qualitative palettes.</p>
 <p>Let’s try <code>Pastel1</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>trash_tot <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sum_Trash,<span class="at">y=</span><span class="fu">reorder</span>(BOROUGH,Sum_Trash),<span class="at">fill=</span>BOROUGH)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">'identity'</span>,<span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(Sum_Trash)),<span class="at">family=</span><span class="st">'serif'</span>,</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontface=</span><span class="st">'bold.italic'</span>,<span class="at">color=</span><span class="st">'#CE1141'</span>,<span class="at">hjust=</span><span class="sc">-</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"NYC Borough"</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Refuse Collected (in tons)"</span>,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trash Collected in NYC by Borough"</span>,</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"September 2011"</span>,</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Borough"</span>) <span class="sc">+</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80000</span>),</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80000</span>,<span class="at">by=</span><span class="dv">10000</span>),</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">"K"</span>,</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">scale =</span> <span class="fl">1e-3</span>)) <span class="sc">+</span></span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Pastel1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>trash_tot <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sum_Trash,<span class="at">y=</span><span class="fu">reorder</span>(BOROUGH,Sum_Trash),<span class="at">fill=</span>BOROUGH)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">'identity'</span>,<span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(Sum_Trash)),<span class="at">family=</span><span class="st">'serif'</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontface=</span><span class="st">'bold.italic'</span>,<span class="at">color=</span><span class="st">'#CE1141'</span>,<span class="at">hjust=</span><span class="sc">-</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"NYC Borough"</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Refuse Collected (in tons)"</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trash Collected in NYC by Borough"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"September 2011"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Borough"</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80000</span>),</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80000</span>,<span class="at">by=</span><span class="dv">10000</span>),</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">"K"</span>,</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">scale =</span> <span class="fl">1e-3</span>)) <span class="sc">+</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Pastel1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -875,36 +913,36 @@ window.Quarto = {
 <p>Being able to use existing color palettes in R packages like <code>viridis</code> and <code>RColorBrewer</code> are nice! But there may be instances where we need to use a custom palette (consider colors for branding!).</p>
 <p>To do this, we will employ the <code>scale_fill_manual</code> function after creating a vector called <code>borough_colors</code> which specifies which borough is assigned which specific color. Note, we can also use hex colors here rather than these specific named colors.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>borough_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bronx"</span> <span class="ot">=</span> <span class="st">'red'</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Brooklyn"</span> <span class="ot">=</span> <span class="st">'blue'</span>,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Manhattan"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Queens"</span> <span class="ot">=</span> <span class="st">"yellow"</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Staten Island"</span> <span class="ot">=</span> <span class="st">'violet'</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>trash_tot <span class="sc">|&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sum_Trash,<span class="at">y=</span><span class="fu">reorder</span>(BOROUGH,Sum_Trash),<span class="at">fill=</span>BOROUGH)) <span class="sc">+</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">'identity'</span>,<span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(Sum_Trash)),<span class="at">family=</span><span class="st">'serif'</span>,</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontface=</span><span class="st">'bold.italic'</span>,<span class="at">color=</span><span class="st">'#CE1141'</span>,<span class="at">hjust=</span><span class="sc">-</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"NYC Borough"</span>,</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Refuse Collected (in tons)"</span>,</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trash Collected in NYC by Borough"</span>,</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"September 2011"</span>,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Borough"</span>) <span class="sc">+</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80000</span>),</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80000</span>,<span class="at">by=</span><span class="dv">10000</span>),</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">"K"</span>,</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">scale =</span> <span class="fl">1e-3</span>)) <span class="sc">+</span></span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> borough_colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>borough_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bronx"</span> <span class="ot">=</span> <span class="st">'red'</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Brooklyn"</span> <span class="ot">=</span> <span class="st">'blue'</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Manhattan"</span> <span class="ot">=</span> <span class="st">"orange"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Queens"</span> <span class="ot">=</span> <span class="st">"yellow"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Staten Island"</span> <span class="ot">=</span> <span class="st">'violet'</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>trash_tot <span class="sc">|&gt;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sum_Trash,<span class="at">y=</span><span class="fu">reorder</span>(BOROUGH,Sum_Trash),<span class="at">fill=</span>BOROUGH)) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">'identity'</span>,<span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(Sum_Trash)),<span class="at">family=</span><span class="st">'serif'</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontface=</span><span class="st">'bold.italic'</span>,<span class="at">color=</span><span class="st">'#CE1141'</span>,<span class="at">hjust=</span><span class="sc">-</span><span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"NYC Borough"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Refuse Collected (in tons)"</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Trash Collected in NYC by Borough"</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"September 2011"</span>,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Borough"</span>) <span class="sc">+</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">'serif'</span>,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">face =</span> <span class="st">'bold.italic'</span>),</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80000</span>),</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80000</span>,<span class="at">by=</span><span class="dv">10000</span>),</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">"K"</span>,</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">scale =</span> <span class="fl">1e-3</span>)) <span class="sc">+</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> borough_colors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
