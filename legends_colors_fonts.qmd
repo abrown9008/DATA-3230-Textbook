@@ -106,7 +106,8 @@ While we can specify a wide variety of fonts, the main three guaranteed to work 
 
 ```{r}
 df <- data.frame(x = 1, y = 3:1, family = c("sans", "serif", "mono"))
-ggplot(df, aes(x, y)) + 
+df |>
+  ggplot(aes(x, y)) + 
   geom_text(aes(label = family, family = family))
 ```
 
@@ -116,6 +117,307 @@ We can also make our fonts, **bold**, *italic*, ***bold.italic**,* or plain:
 
 ```{r}
 df <- data.frame(x = 1:4, fontface = c("plain", "bold", "italic", "bold.italic"))
-ggplot(df, aes(1, x)) + 
+df |>
+  ggplot(aes(1, x)) + 
   geom_text(aes(label = fontface, fontface = fontface))
+```
+
+#### Font Color
+
+We can modify the color of our text uniformly by using the `color` argument within the `geom_text` function by either using a named color (see the `colors()` function for the full list) or using hex codes:
+
+```{r}
+## Salmon Font ##
+df |>
+  ggplot(aes(1, x)) + 
+  geom_text(aes(label = fontface, fontface = fontface),
+            color='salmon')
+```
+
+```{r}
+## Manchester City Light Blue ##
+df |>
+  ggplot(aes(1, x)) + 
+  geom_text(aes(label = fontface, fontface = fontface),
+            color = "#6CABDD")
+```
+
+For our NYC Garbage example, suppose I want the text to serif style, with a bold italic font face, and in Atlanta Braves red (hex code #CE1141):
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=1.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic()
+```
+
+## Modifying Axes Elements
+
+### Axis Length
+
+Still using our NYC Garbage example, let's suppose I'd rather have the text labels outside of the bars to the right rather than inside the bars to the left. Remember, we can make a simple change to our `hjust` argument to do this:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic()
+```
+
+Whoops! Now I can't see Brooklyn's label! It's being truncated by the size of our viewing window.
+
+One way this can be modified is by increasing the x-axis length. We can do this by using the `limits` argument within the `scale_x_continuous` function.
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic() +
+  scale_x_continuous(limits = c(0,75000))
+```
+
+Awesome! That solved the problem!
+
+### Modifying Tick Marks
+
+Notice that our tick marks on the x-axis are in increments of 20,000.
+
+What if we want to increase the number of tick marks to be in increments of 10,000 instead? We can again use `scale_x_continuous` this timing making use of the `breaks` argument:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic() +
+  scale_x_continuous(limits = c(0,75000),
+                     breaks = seq(0,80000,by=10000))
+```
+
+### Formatting Tick Mark Labels
+
+In the above visualization, we note that each tick mark represents a unit measured in the thousands as we can see by the three trailing zeros in each tick mark label.
+
+We may perhaps wish to represent "thousand" by the common label "K" so that 10000 = 10K.
+
+To do this using `ggplot2`, we can once again use the very useful `scale_x_continuous` function, now adding a new element of functionality – the `labels` function:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic() +
+  scale_x_continuous(limits = c(0,75000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
+```
+
+Notice in the above code, we are using the `label_number` function from the `scales` package to add the "K" suffix to the labels and scale (or multiply) the numeric labels by $1/1000$.
+
+### Modifying Axis Font Styles
+
+We already learned how to modify font styles in the context of `geom_text`, but we can use the exact same logic and syntax to modify font in our axes as well as titles!
+
+So suppose we want our tick mark labels and axis titles to match the formatting of our data labels. We can do this using the `theme` function:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash))) +
+  geom_bar(stat='identity',color='black',fill='white') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic',
+                                   color = '#CE1141'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic',
+                                    color = '#CE1141'),
+        axis.text.y = element_text(family = 'serif',
+                                   face = 'bold.italic',
+                                   color = '#CE1141'),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic',
+                                    color = '#CE1141')) +
+  scale_x_continuous(limits = c(0,75000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
+```
+
+## Legends
+
+Rather than having the bars all be a uniform color (white in this case), suppose I want to have the colors of the bars differ by the particular borough they're representing. We can do so with a very slight modification to the existing code.
+
+In the global `ggplot` function, let's add `fill=BOROUGH`:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic')) +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
+```
+
+Cool, right? But now, we don't really have a need for the y-axis labels. We can supress those and the tick marks using the `theme` function:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank()) +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
+```
+
+Notice the legend title is all caps. We can modify the legend title in the `labs` function:
+
+```{r}
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank()) +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
+```
+
+We can also control the position of the legend within the visualization through the `legend.position` argument within the `theme` function:
+
+```{r}
+## Top ##
+
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank(),
+        legend.position = "top") +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
+## Bottom ##
+
+trash_tot |>
+  ggplot(aes(x=Sum_Trash,y=reorder(BOROUGH,Sum_Trash),fill=BOROUGH)) +
+  geom_bar(stat='identity',color='black') +
+  geom_text(aes(label=round(Sum_Trash)),family='serif',
+            fontface='bold.italic',color='#CE1141',hjust=-0.25) +
+  labs(y = "NYC Borough",
+       x = "Total Refuse Collected (in tons)",
+       title = "Trash Collected in NYC by Borough",
+       subtitle = "September 2011",
+       fill = "Borough") +
+  theme_classic() +
+  theme(axis.text.x = element_text(family = 'serif',
+                                   face = 'bold.italic'),
+        axis.title.x = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.text.y = element_blank(),
+        axis.title.y = element_text(family = 'serif',
+                                    face = 'bold.italic'),
+        axis.ticks.y = element_blank(),
+        legend.position = "bottom") +
+  scale_x_continuous(limits = c(0,80000),
+                     breaks = seq(0,80000,by=10000),
+                     labels = scales::label_number(suffix = "K",
+                                                   scale = 1e-3))
 ```
