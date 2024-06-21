@@ -1,7 +1,3 @@
----
-
----
-
 # Using Legends, Colors, Fonts, and Axes to Improve Visualizations
 
 ## Introduction

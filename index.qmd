@@ -2,6 +2,8 @@
 
 Welcome to [**DATA 3230 - Data Visualization**]{.underline}! My name is Dr Austin Brown and I am a faculty member in the School of Data Science and Analytics at Kennesaw State University.
 
+The syllabus for the [**Fall 2024**]{.underline} term can be found [here](https://github.com/abrown9008/DATA-3230-Data-Visualization/blob/main/DATA%203230%20Fall%202024%20Syllabus.docx).
+
 This course is designed to teach students not only how to create data visualizations, but how to create them in an appropriate and aesthetically pleasing manner.
 
 # Coding Requirements
