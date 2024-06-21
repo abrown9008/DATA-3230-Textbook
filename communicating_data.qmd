@@ -270,6 +270,6 @@ The answers to these questions can be useful in aiding the development of our vi
 
 In sum, while knowing how to create various types of visualizations is a wonderful skill, it is better to know how to create *effective* visualizations.
 
-Throughout this course, we will explore specific ways of doing this very thing and also think critically about what effectivenss means in specific situations.
+Throughout this course, we will explore specific ways of doing this very thing and also think critically about what effectiveness means in specific situations.
 
 Next, let's learn how we can use R, and specifically the `ggplot2` package, to build quality visualizations to answer research questions...

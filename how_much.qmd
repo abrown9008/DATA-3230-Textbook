@@ -10,9 +10,9 @@ In this section, we are going to be learning about existing methods which help u
 -   "How much carbon dioxide is in the atmosphere?"
 -   "How much time do undergraduate students in Georgia spend on social media sites per day?"
 
-In this section, we are doing to focus on answering "How Much?" types of questions using a single (or univariate) *quantitative* variable.
+In other words, we will be focusing on questions which involve a single (or univariate) *quantitative* variable.
 
-Quantitative variables, as we learned in the prior section, which are measured are things like revenue, weight, distance, and time, among many, many others. Generally, here, our data source would need to be in aggregate form, so that a single record exists. For instance:
+Quantitative variables could be characteristics like revenue, weight, distance, and time, among many, many others. Generally, here, our data source would need to be in aggregate form, so that a single record exists. For instance:
 
 -   A sales order generating revenues of \$95
 -   A shipment weighing 5.2 pounds
@@ -163,7 +163,7 @@ trash_tot |>
   theme_classic()
 ```
 
-This better! And just like with the bar chart, we can convert our vertical dot chart into a horizontal dot chart with a small modification to the `ggplot` function's code in the exact same manner as before:
+This is better! And just like with the bar chart, we can convert our vertical dot chart into a horizontal dot chart with a small modification to the `ggplot` function's code in the exact same manner as before:
 
 ### Ordered Horizontal Dot Chart
 
