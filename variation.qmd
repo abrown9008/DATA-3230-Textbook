@@ -1,0 +1,284 @@
+# Communicating Variation
+
+## Introduction
+
+One of the fundamental concepts in data science and statistics is that of variability.
+
+For instance, not every Major League Baseball team wins the same number of games during a given regular season. The value, total number of wins in this case, varies from team to team.
+
+A goal in data science and statistics is to identify assignable reasons (not necessarily causal reasons) which can help us explain the variability we are observing. We generally call this "modeling."
+
+However, the conclusions drawn from models may not necessarily be easily disseminated to a broad audience.
+
+This is to say, visualizations may be effective tools we can use to visually communicate variability.
+
+## Major League Baseball Strikeout Example
+
+Suppose I want to see how the average number of strikeouts per nine innings pitched (SO/9) MLB pitchers have thrown has changed, if at all, from the 1910 season to the 2023 season.
+
+Let's also focus on pitchers who have thrown more than 15 innings to avoid including position players who may occassionally be called on to pitch in lopsided games.
+
+We can make use of the `Lahman` package to get the data we need and then use the `dplyr` package to get it into the right format.
+
+```{r}
+library(tidyverse)
+so9 <- Lahman::Pitching |>
+  filter(between(yearID,1910,2023) & (IPouts/3) >= 15) |>
+  mutate(SO9 = SO/(IPouts/3)*9) |>
+  group_by(yearID) |>
+  summarize(Mean_SO9 = mean(SO9,na.rm=T))
+
+so9 |>
+  glimpse()
+```
+
+To be clear about what the above code is doing:
+
+1. We are loading the `tidyverse` package which includes the `dplyr` package.
+2. We are taking the `Pitching` data from the `Lahman` package and filtering it to include only:
+    - Data from the 1910 season to the 2023 season _and_
+    - Data from pitchers who have thrown at least 15 innings.
+3. We are creating a new variable `SO9` which is the average number of strikeouts per nine innings pitched using the `mutate` function.
+4. We are grouping the data by `yearID` and calculating the mean `SO9` for each year.
+
+## Communicating Variation using a Time Series Plot
+
+Okay great! Now that the data are in the right format, we can shift our focus to `ggplot2`. The specific visualization we will use in this case is one you've likely seen before: the time series plot.
+
+This visualization generally consists of a line plot with time on the x-axis (`yearID` for us) and the variable of interest on the y-axis (`Mean_SO9` for us).
+
+To create this type of visualizaiton with `ggplot2`, we will make use of a new geom: `geom_line`
+
+```{r}
+so9 |>
+  ggplot(aes(x=yearID,y=Mean_SO9)) +
+  geom_point() +
+  geom_line() +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2020 Regular Seasons") +
+  theme_classic()
+```
+
+As we can see, SO/9 has steadily increased over time with notable decreases during the first World War/Flu Pandemic and right around baseball becoming integrated.
+
+The results make sense: pitching has become much more specialized over time and of course, the athletes are also training much differently than in the past.
+
+#### Annotating Time Series Plots
+
+In the above plot, we can see the general trend of SO/9 over time. However, we may want to highlight specific years, such as the years with the highest and lowest SO/9 values.
+
+To achieve this, we will first identify which years had the highest and lowest SO/9 values and save those values to their own dataframe:
+
+```{r}
+minmax <- so9 |>
+  filter(Mean_SO9 == min(Mean_SO9) | Mean_SO9 == max(Mean_SO9))
+
+minmax |>
+  glimpse()
+```
+
+Now we can plot by using the `geom_text` function to add text to the original plot, much like we did in Chapter 4:
+
+```{r}
+so9 |>
+  ggplot(aes(x=yearID,y=Mean_SO9)) +
+  geom_point() +
+  geom_line() +
+  geom_text(aes(label=Mean_SO9),data=minmax) +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic()
+```
+We observe a couple of problems here:
+
+    1. We have too many digits in our labels; we need to round.
+    2. We need to adjust the position of our labels so they don't overlap with the line plot.
+    
+Fortunately, we can fix both problems with relative ease:
+
+```{r}
+so9 |>
+  ggplot(aes(x=yearID,y=Mean_SO9)) +
+  geom_point() +
+  geom_line() +
+  geom_text(aes(label=round(Mean_SO9,2)),
+            vjust = -1,data=minmax) +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic() +
+  scale_y_continuous(limits=c(2,11))
+```
+Great! We have nice data labels on our visualization now! But we are now encountering another problem: what in the world do the labels represent? 
+
+As of right now, they are numbers on a graph with no context. We need to add some context to these labels to make them more interpretable.
+
+Let's create a short sentence for each label that explains what the label represents by modifying our `minmax` dataframe:
+
+```{r}
+minmax <- minmax |>
+  mutate(label = case_when(Mean_SO9 == min(Mean_SO9) ~ paste(yearID,"Lowest SO/9\nin 1910-2023"),
+                           Mean_SO9 == max(Mean_SO9) ~ paste(yearID,"Highest SO/9\nin 1910-2023"))
+  )
+
+minmax |>
+  glimpse()
+```
+
+Cool! So let's now add these improved labels to our plot:
+
+```{r}
+so9 |>
+  ggplot(aes(x=yearID,y=Mean_SO9)) +
+  geom_point() +
+  geom_line() +
+  geom_text(aes(label=label),
+            vjust = -1,data=minmax) +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic()  +
+  scale_y_continuous(limits=c(2,12),
+                     breaks = seq(1,13)) +
+  scale_x_continuous(limits = c(1910,2027))
+```
+We can also use a great package called `ggrepel` to help us avoid overlapping labels. This package is not included in the `tidyverse` package, so we will need to install it separately:
+
+```{r}
+library(ggrepel)
+so9 |>
+  ggplot(aes(x=yearID,y=Mean_SO9)) +
+  geom_point() +
+  geom_line() +
+  geom_label_repel(aes(label=label),
+                   family='serif',
+                   color='turquoise',
+                   fontface='bold',
+                   size=3,
+                   nudge_y = 1,
+                   alpha = 0.8,
+                   data=minmax) +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic()  +
+  scale_y_continuous(limits=c(2,12),
+                     breaks = seq(1,13)) +
+  scale_x_continuous(limits = c(1910,2027))
+```
+Notice in the above `geom_label_repel` code, I used `alpha` and `nudge_y`. The `alpha` argument controls the transparency of the labels (0 meaning completely invisible and 1 meaning completely opaque), while the `nudge_y` argument controls the vertical position of the labels (`nudge_y=1` means push the label up 1 unit along the y-axis).
+
+Overall, we have added a little more context to our existing plot by using techniques largely familiar to us from previous lessons!
+
+But what is a primary limitation of this plot? It communicates variability across the years but not within the years.
+
+Consequently, we can't see how the within-year variability has changed over time, which may be useful for us to know! There are a few different options we can employ to help solve this problem:
+
+### Time Series Plot with Standard Errors
+
+First, we can plot not only the mean value for each year, but we can also plot the standard errors of the means. This will give us a sense of how much the mean value is varying from year to year.
+
+To do this, we will reaggregate our data now using the `rstatix` package in order to obtain the standard errors of the means.
+
+```{r}
+library(rstatix)
+so9 <- Lahman::Pitching |>
+  filter(between(yearID,1910,2023) & (IPouts/3) >= 15) |>
+  mutate(SO9 = SO/(IPouts/3)*9) |>
+  group_by(yearID) |>
+  get_summary_stats(SO9,type='full') |>
+  select(yearID,mean,se)
+
+so9 |>
+  glimpse()
+```
+
+Now that we have the standard errors of the means, we can plot them using `geom_errorbar` in `ggplot2`.
+
+```{r}
+so9 |>
+  ggplot(aes(x=yearID,y=mean)) +
+  geom_point() +
+  geom_errorbar(aes(ymin=mean-se,ymax=mean+se)) +
+  geom_line() +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic()
+```
+
+Looks pretty good! But what's the problem?
+
+Primarily, because we have so many seasons (big x-axis) and so many pitchers in a given season (big $n$ within a given year), the standard errors are very small. This makes it difficult to see the standard errors on the plot.
+
+To get around this issue, it may be preferable to use boxplots rather than standard errors to represent the within-year variation.
+
+However, to visualize boxplots, the data must be in its raw form (i.e., each row represents an individaul pitcher in a given season). To do this, we simply won't perform any grouping operation:
+
+```{r}
+so9 <- Lahman::Pitching |>
+  filter(between(yearID,1910,2023) & (IPouts/3) >= 15) |>
+  mutate(SO9 = SO/(IPouts/3)*9)
+
+so9 |>
+  glimpse()
+```
+
+Now that the data are in the right format, we can use `geom_boxplot` to visualize the within-year variation.
+
+```{r}
+so9 |>
+  ggplot(aes(x=factor(yearID),y=SO9)) +
+  geom_boxplot(fill='white',color='black') +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic()
+```
+
+Okay we're getting closer! Here, we can see that not only is the mean SO/9 increasing over time, but so too is the variability from year to year.
+
+We can see this since the difference between the top of each box and the bottom of each box, the 75th and 25th percentiles, respectively, tends to widen as we move from left to right across the graphic.
+
+But notice what's going on the x-axis. The tick mark labels are all overlapping to the point where they are completely illegible.
+
+Fortunately, we have a few tricks to modify the tick marks on either the x or y axis. One such trick is to change the angle of the tick mark labels on the x-axis using the `element_text` function within the versatile `theme` function:
+
+```{r}
+so9 |>
+  ggplot(aes(x=factor(yearID),y=SO9)) +
+  geom_boxplot(fill='white',color='black') +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=45))
+```
+
+This may be a useful trick in some situations, but here, since we have so many tick mark labels, it didn't really help. 
+
+What if instead we only included the tick mark labels for every 10 years? We can do this with the `scale_x_discrete` function much like we did in Chapter 4. Here, we'll use the `breaks` argument to specify the tick mark labels we want to include:
+
+```{r}
+so9 |>
+  ggplot(aes(x=factor(yearID),y=SO9)) +
+  geom_boxplot(fill='white',color='black') +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 1910 & 2023 Regular Seasons") +
+  theme_classic() +
+  scale_x_discrete(breaks=seq(1910,2023,10))
+```
+
+

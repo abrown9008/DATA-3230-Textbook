@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./variation.html" rel="next">
 <link href="./how_much.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -203,6 +204,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./legends_colors_fonts.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Using Legends, Colors, Fonts, and Axes to Improve Visualizations</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./variation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Communicating Variation</span></span></a>
   </div>
 </li>
     </ul>
@@ -481,7 +488,7 @@ window.Quarto = {
 <section id="modifying-tick-marks" class="level3" data-number="4.3.2">
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="modifying-tick-marks"><span class="header-section-number">4.3.2</span> Modifying Tick Marks</h3>
 <p>Notice that our tick marks on the x-axis are in increments of 20,000.</p>
-<p>What if we want to increase the number of tick marks to be in increments of 10,000 instead? We can again use <code>scale_x_continuous</code> this timing making use of the <code>breaks</code> argument:</p>
+<p>What if we want to increase the number of tick marks to be in increments of 10,000 instead? We can again use <code>scale_x_continuous</code> this time making use of the <code>breaks</code> argument:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>trash_tot <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sum_Trash,<span class="at">y=</span><span class="fu">reorder</span>(BOROUGH,Sum_Trash))) <span class="sc">+</span></span>
@@ -1383,6 +1390,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./variation.html" class="pagination-link" aria-label="Communicating Variation">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Communicating Variation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

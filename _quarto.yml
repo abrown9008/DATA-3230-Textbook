@@ -17,6 +17,8 @@ book:
     - how_much.qmd
     
     - legends_colors_fonts.qmd
+    
+    - variation.qmd
 
 bibliography: references.bib
 
