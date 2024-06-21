@@ -196,7 +196,7 @@ Awesome! That solved the problem!
 
 Notice that our tick marks on the x-axis are in increments of 20,000.
 
-What if we want to increase the number of tick marks to be in increments of 10,000 instead? We can again use `scale_x_continuous` this timing making use of the `breaks` argument:
+What if we want to increase the number of tick marks to be in increments of 10,000 instead? We can again use `scale_x_continuous` this time making use of the `breaks` argument:
 
 ```{r}
 trash_tot |>
