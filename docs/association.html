@@ -228,12 +228,17 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">6.1</span> Introduction</a></li>
-  <li><a href="#communicating-association-with-a-scatterplot" id="toc-communicating-association-with-a-scatterplot" class="nav-link" data-scroll-target="#communicating-association-with-a-scatterplot"><span class="header-section-number">6.2</span> Communicating Association with a Scatterplot</a>
+  <li><a href="#communicating-association-between-quantitative-variables-with-a-scatterplot" id="toc-communicating-association-between-quantitative-variables-with-a-scatterplot" class="nav-link" data-scroll-target="#communicating-association-between-quantitative-variables-with-a-scatterplot"><span class="header-section-number">6.2</span> Communicating Association Between Quantitative Variables with a Scatterplot</a>
   <ul class="collapse">
   <li><a href="#interpreting-a-scatterplot" id="toc-interpreting-a-scatterplot" class="nav-link" data-scroll-target="#interpreting-a-scatterplot"><span class="header-section-number">6.2.1</span> Interpreting a Scatterplot</a></li>
   <li><a href="#adding-a-regression-line-and-equation-to-a-scatterplot" id="toc-adding-a-regression-line-and-equation-to-a-scatterplot" class="nav-link" data-scroll-target="#adding-a-regression-line-and-equation-to-a-scatterplot"><span class="header-section-number">6.2.2</span> Adding a Regression Line and Equation to a Scatterplot</a></li>
+  <li><a href="#faceting-scatterplots" id="toc-faceting-scatterplots" class="nav-link" data-scroll-target="#faceting-scatterplots"><span class="header-section-number">6.2.3</span> Faceting Scatterplots</a></li>
   </ul></li>
-  <li><a href="#faceting-scatterplots" id="toc-faceting-scatterplots" class="nav-link" data-scroll-target="#faceting-scatterplots"><span class="header-section-number">6.3</span> Faceting Scatterplots</a></li>
+  <li><a href="#communicating-association-between-categorical-variables-with-bar-charts" id="toc-communicating-association-between-categorical-variables-with-bar-charts" class="nav-link" data-scroll-target="#communicating-association-between-categorical-variables-with-bar-charts"><span class="header-section-number">6.3</span> Communicating Association Between Categorical Variables with Bar Charts</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-grouped-bar-chart" id="toc-creating-a-grouped-bar-chart" class="nav-link" data-scroll-target="#creating-a-grouped-bar-chart"><span class="header-section-number">6.3.1</span> Creating a Grouped Bar Chart</a></li>
+  <li><a href="#creating-a-stacked-bar-chart" id="toc-creating-a-stacked-bar-chart" class="nav-link" data-scroll-target="#creating-a-stacked-bar-chart"><span class="header-section-number">6.3.2</span> Creating a Stacked Bar Chart</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -267,8 +272,8 @@ window.Quarto = {
 <p>Nothing we have learned so far can do this in an effective way.</p>
 <p>Instead, a tool called a <em>scatterplot</em> would be more effective.</p>
 </section>
-<section id="communicating-association-with-a-scatterplot" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="communicating-association-with-a-scatterplot"><span class="header-section-number">6.2</span> Communicating Association with a Scatterplot</h2>
+<section id="communicating-association-between-quantitative-variables-with-a-scatterplot" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="communicating-association-between-quantitative-variables-with-a-scatterplot"><span class="header-section-number">6.2</span> Communicating Association Between Quantitative Variables with a Scatterplot</h2>
 <p>A scatterplot, in general, is a visualization which exists on a Cartesian plane, like what we learned about back in high school algebra. It has an <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> axis which represent numeric variables.</p>
 <p>It is common to plot individual points, which contain quantitative <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinates, upon this plane. In the above baseball example, runs scored and homeruns hit are both quantitative attributes of an MLB team during a given season that we could easily plot upon the aforementioned plane.</p>
 <p>With this visualization, we can get a sense of the relationship or association which may exist between the two quantitative variables we are interested in!</p>
@@ -461,9 +466,8 @@ $ HR     &lt;int&gt; 173, 243, 171, 155, 149, 159, 156, 127, 149, 110, 214, 138,
 <p>Notice that the <code>label.x</code> and <code>label.y</code> arguments control the position of the regression equation.</p>
 <p>And just like we did previously with text labels/annotations, we can also control their size and color.</p>
 </section>
-</section>
-<section id="faceting-scatterplots" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="faceting-scatterplots"><span class="header-section-number">6.3</span> Faceting Scatterplots</h2>
+<section id="faceting-scatterplots" class="level3" data-number="6.2.3">
+<h3 data-number="6.2.3" class="anchored" data-anchor-id="faceting-scatterplots"><span class="header-section-number">6.2.3</span> Faceting Scatterplots</h3>
 <p>Obviously with the <code>Lahman</code> baseball data, there are lots of different ways that we can slice the data to answer different questions.</p>
 <p>For instance, in the prior visualization, we observed the relationship between homeruns hit and runs scored for a single, static season.</p>
 <p>What if we wanted to see how that relationship changed from say, 2019 to 2022?</p>
@@ -529,8 +533,150 @@ $ HR     &lt;int&gt; 220, 58, 144, 173, 249, 103, 239, 243, 213, 77, 195, 171, 2
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="communicating-association-between-categorical-variables-with-bar-charts" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="communicating-association-between-categorical-variables-with-bar-charts"><span class="header-section-number">6.3</span> Communicating Association Between Categorical Variables with Bar Charts</h2>
+<p>While using a scatterplot for communicating association between two quantitative variables is a very effective tool for that purpose, the scatterplot is not at all effective for doing so using two categorical variables.</p>
+<p>As you can imagine, there are lots of instances where communicating the association or relationship between two categorical variables is useful!</p>
+<p>For example, in the <code>ggplot2::diamonds</code> dataset, we have information about the characteristics of over 50,000 round cut diamonds including quality of the cut (<code>cut</code>) and the quality of the color (<code>color</code>). Both of these variables are categorical variables as they include qualitative ratings.</p>
+<p>Suppose I’m interested in understanding what the relationship between cut and color may be! As always, we must first start with a little data wrangling to ensure our data are in the right format.</p>
+<p>In this case, I’m going to essentially be creating a cross-tabular table, where I count the frequency of each cell combination. Let me show you what I mean by that using the below code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span>diamonds <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cut,color) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 35 × 3
+# Groups:   cut, color [35]
+   cut   color     n
+   &lt;ord&gt; &lt;ord&gt; &lt;int&gt;
+ 1 Fair  D       163
+ 2 Fair  E       224
+ 3 Fair  F       312
+ 4 Fair  G       314
+ 5 Fair  H       303
+ 6 Fair  I       175
+ 7 Fair  J       119
+ 8 Good  D       662
+ 9 Good  E       933
+10 Good  F       909
+# ℹ 25 more rows</code></pre>
+</div>
+</div>
+<p>As you can see, for each unique value of <code>cut</code>, there is a corresponding value of <code>color</code>, and the number of times that combination of cut and color was observed in the <code>diamonds</code> dataset.</p>
+<p>To visualize, we can use variations of our old friend the bar chart!</p>
+<section id="creating-a-grouped-bar-chart" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="creating-a-grouped-bar-chart"><span class="header-section-number">6.3.1</span> Creating a Grouped Bar Chart</h3>
+<p>One way we can visualize the association between categorical variables is through the use of a grouped bar chart. To generate this with <code>ggplot2</code>, we essentially only have to specify a grouping variable using an aesthetic like <code>fill</code> and then specify that we want a grouped bar chart within the <code>geom_bar</code> function.</p>
+<p>Let’s check it out:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> color, <span class="at">y =</span> n, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diamond Color Classification</span><span class="sc">\n</span><span class="st">(from best (D) to worst (J))"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Diamond Cut</span><span class="sc">\n</span><span class="st">Classification"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Relationship Between Diamond Cut and Color"</span>) <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="association_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This looks pretty good! We can see that as color classification improves, there tends to be a greater proportion of premium and ideal cut diamonds compared to the worse color classifications.</p>
+<p>As we have seen in prior chapters, we can change the color palette using <code>scale_fill</code> prefixed functions.</p>
+</section>
+<section id="creating-a-stacked-bar-chart" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="creating-a-stacked-bar-chart"><span class="header-section-number">6.3.2</span> Creating a Stacked Bar Chart</h3>
+<p>Note, in this visualization’s interpretation, we talked about comparing the proportion across groups. If we have equal group sizes (i.e., if all of the color classifications contained the same number of diamonds), it is much easier to make these comparisons. When we don’t, it can be challenging.</p>
+<p>This is where the stacked bar chart comes into play. To generate this visualization, we can simply change one argument within the <code>geom_bar</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> color, <span class="at">y =</span> n, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="fu">position_stack</span>()) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diamond Color Classification</span><span class="sc">\n</span><span class="st">(from best (D) to worst (J))"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Diamond Cut</span><span class="sc">\n</span><span class="st">Classification"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Relationship Between Diamond Cut and Color"</span>) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="association_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I tend to like this a little bit better! However, again, if our goal is comparing the diamond cut classifications across the levels of color classification, we are running into the issue of unequal group size. To get around this, we can convert our raw frequencies into relative frequencies (or proportions) to create what’s called a “100% stacked bar chart”:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> color, <span class="at">y =</span> pct, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="fu">position_stack</span>()) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diamond Color Classification</span><span class="sc">\n</span><span class="st">(from best (D) to worst (J))"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Proportion"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Diamond Cut</span><span class="sc">\n</span><span class="st">Classification"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Relationship Between Diamond Cut and Color"</span>) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="association_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now that we have standardized our frequencies, comparison is greatly simplified! Here, we can see that among the worst color classification (J), fair, good, and very good cut diamonds make up a slightly greater proportion of the overall diamond total compared to the better color classifications.</p>
+<p>We have some ways we can potentially modify the above visualization. Namely:</p>
+<ol type="1">
+<li>Converting the proportions to percentages on the y-axis</li>
+<li>Adding data labels to the bars</li>
+</ol>
+<p>Let’s see how we can solve both problems:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> n<span class="sc">/</span><span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct1 =</span> <span class="fu">paste</span>(<span class="fu">round</span>(pct<span class="sc">*</span><span class="dv">100</span>,<span class="dv">2</span>),<span class="st">"%"</span>,<span class="at">sep=</span><span class="st">""</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> color, <span class="at">y =</span> pct, <span class="at">fill =</span> cut)) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">'identity'</span>, </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">position =</span> <span class="fu">position_stack</span>()) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> pct1),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">position=</span><span class="fu">position_stack</span>(<span class="at">vjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">color=</span><span class="st">'white'</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">fontface=</span><span class="st">'bold'</span>) <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Diamond Color Classification</span><span class="sc">\n</span><span class="st">(from best (D) to worst (J))"</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Percentage"</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Diamond Cut</span><span class="sc">\n</span><span class="st">Classification"</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Relationship Between Diamond Cut and Color"</span>) <span class="sc">+</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">option=</span><span class="st">"E"</span>,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">discrete=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="association_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

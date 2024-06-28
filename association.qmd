@@ -12,7 +12,7 @@ Nothing we have learned so far can do this in an effective way.
 
 Instead, a tool called a *scatterplot* would be more effective.
 
-## Communicating Association with a Scatterplot
+## Communicating Association Between Quantitative Variables with a Scatterplot
 
 A scatterplot, in general, is a visualization which exists on a Cartesian plane, like what we learned about back in high school algebra. It has an $x$ and $y$ axis which represent numeric variables.
 
@@ -194,7 +194,7 @@ Notice that the `label.x` and `label.y` arguments control the position of the re
 
 And just like we did previously with text labels/annotations, we can also control their size and color.
 
-## Faceting Scatterplots
+### Faceting Scatterplots
 
 Obviously with the `Lahman` baseball data, there are lots of different ways that we can slice the data to answer different questions.
 
@@ -246,4 +246,119 @@ mlb2 |>
        subtitle="2019 - 2022 Regular Seasons") +
   theme_bw() +
   theme(legend.position = 'none')
+```
+
+## Communicating Association Between Categorical Variables with Bar Charts
+
+While using a scatterplot for communicating association between two quantitative variables is a very effective tool for that purpose, the scatterplot is not at all effective for doing so using two categorical variables.
+
+As you can imagine, there are lots of instances where communicating the association or relationship between two categorical variables is useful!
+
+For example, in the `ggplot2::diamonds` dataset, we have information about the characteristics of over 50,000 round cut diamonds including quality of the cut (`cut`) and the quality of the color (`color`). Both of these variables are categorical variables as they include qualitative ratings.
+
+Suppose I'm interested in understanding what the relationship between cut and color may be! As always, we must first start with a little data wrangling to ensure our data are in the right format.
+
+In this case, I'm going to essentially be creating a cross-tabular table, where I count the frequency of each cell combination. Let me show you what I mean by that using the below code:
+
+```{r}
+diamonds_df <- ggplot2::diamonds |>
+  group_by(cut,color) |>
+  count()
+
+diamonds_df |>
+  slice_head(n=8)
+```
+
+As you can see, for each unique value of `cut`, there is a corresponding value of `color`, and the number of times that combination of cut and color was observed in the `diamonds` dataset.
+
+To visualize, we can use variations of our old friend the bar chart!
+
+### Creating a Grouped Bar Chart
+
+One way we can visualize the association between categorical variables is through the use of a grouped bar chart. To generate this with `ggplot2`, we essentially only have to specify a grouping variable using an aesthetic like `fill` and then specify that we want a grouped bar chart within the `geom_bar` function.
+
+Let's check it out:
+
+```{r}
+diamonds_df |>
+  ggplot(aes(x = color, y = n, fill = cut)) +
+  geom_bar(stat = 'identity', 
+           position = position_dodge()) +
+  labs(x = "Diamond Color Classification\n(from best (D) to worst (J))",
+       y = "Frequency",
+       fill = "Diamond Cut\nClassification",
+       title = "Relationship Between Diamond Cut and Color") +
+  theme_classic()
+```
+
+This looks pretty good! We can see that as color classification improves, there tends to be a greater proportion of premium and ideal cut diamonds compared to the worse color classifications.
+
+As we have seen in prior chapters, we can change the color palette using `scale_fill` prefixed functions.
+
+### Creating a Stacked Bar Chart
+
+Note, in this visualization's interpretation, we talked about comparing the proportion across groups. If we have equal group sizes (i.e., if all of the color classifications contained the same number of diamonds), it is much easier to make these comparisons. When we don't, it can be challenging.
+
+This is where the stacked bar chart comes into play. To generate this visualization, we can simply change one argument within the `geom_bar` function:
+
+```{r}
+diamonds_df |>
+  ggplot(aes(x = color, y = n, fill = cut)) +
+  geom_bar(stat = 'identity', 
+           position = position_stack()) +
+  labs(x = "Diamond Color Classification\n(from best (D) to worst (J))",
+       y = "Frequency",
+       fill = "Diamond Cut\nClassification",
+       title = "Relationship Between Diamond Cut and Color") +
+  theme_classic()
+```
+
+I tend to like this a little bit better! However, again, if our goal is comparing the diamond cut classifications across the levels of color classification, we are running into the issue of unequal group size. To get around this, we can convert our raw frequencies into relative frequencies (or proportions) to create what's called a "100% stacked bar chart":
+
+```{r}
+diamonds_df |>
+  group_by(color) |>
+  mutate(pct = n/sum(n)) |>
+  ggplot(aes(x = color, y = pct, fill = cut)) +
+  geom_bar(stat = 'identity', 
+           position = position_stack()) +
+  labs(x = "Diamond Color Classification\n(from best (D) to worst (J))",
+       y = "Proportion",
+       fill = "Diamond Cut\nClassification",
+       title = "Relationship Between Diamond Cut and Color") +
+  theme_classic()
+```
+
+Now that we have standardized our frequencies, comparison is greatly simplified! Here, we can see that among the worst color classification (J), fair, good, and very good cut diamonds make up a slightly greater proportion of the overall diamond total compared to the better color classifications.
+
+We have some ways we can potentially modify the above visualization. Namely:
+
+1.  Converting the proportions to percentages on the y-axis
+2.  Adding data labels to the bars
+
+Let's see how we can solve both problems:
+
+```{r}
+library(viridis)
+diamonds_df |>
+  group_by(color) |>
+  mutate(pct = n/sum(n)) |>
+  mutate(pct1 = paste(round(pct*100,2),"%",sep="")) |>
+  ggplot(aes(x = color, y = pct, fill = cut)) +
+  geom_bar(stat = 'identity', 
+           position = position_stack()) +
+  geom_label(aes(label = pct1),
+            position=position_stack(vjust=0.5),
+            color='white',
+            size = 3,
+            fontface='bold') +
+  labs(x = "Diamond Color Classification\n(from best (D) to worst (J))",
+       y = "Percentage",
+       fill = "Diamond Cut\nClassification",
+       title = "Relationship Between Diamond Cut and Color") +
+  theme_classic() +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis(option="E",
+                     discrete=T)
+  
 ```
