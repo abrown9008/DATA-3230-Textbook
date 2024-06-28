@@ -215,6 +215,8 @@ so9 |>
   theme_classic()
 ```
 
+## Communicating Variation with Boxplots
+
 Looks pretty good! But what's the problem?
 
 Primarily, because we have so many seasons (big x-axis) and so many pitchers in a given season (big $n$ within a given year), the standard errors are very small. This makes it difficult to see the standard errors on the plot.
@@ -244,6 +246,8 @@ so9 |>
        subtitle="Between the 1910 & 2023 Regular Seasons") +
   theme_classic()
 ```
+
+### Formatting Tick Marks in Boxplots
 
 Okay we're getting closer! Here, we can see that not only is the mean SO/9 increasing over time, but so too is the variability from year to year.
 
@@ -281,4 +285,30 @@ so9 |>
   scale_x_discrete(breaks=seq(1910,2023,10))
 ```
 
+## Communicating Data with Half-Violin Plots
 
+This looks much better! We can now see the within-year variation in SO/9 over time much more clearly than before.
+
+However, boxplots are not without some limitations of their own. For instance, they do not show the distribution of the data within each year. The boxplot only shows the median, the 25th and 75th percentiles, and the minimum and maximum values.
+
+So what if we wanted the benefits of the boxplots but also wanted to visually assess distributional characteristics of the data within each year, like we do with histograms and density plots?
+
+This is where half-violin plots come in! Half-violin plots are a combination of boxplots and density plots. They show the distribution of the data within each year while also showing the median, the 25th and 75th percentiles, and the minimum and maximum values.
+
+Let's see how we can create a violin plot using `geom_violinhalf` using the helper package `see`, this time focusing only on the years between 2015 and 2022:
+
+```{r}
+library(see)
+so9 |>
+  filter(between(yearID,2015,2022)) |>
+  ggplot(aes(x=factor(yearID),y=SO9)) +
+  geom_violinhalf(fill='green') +
+  geom_boxplot(width = 0.1, fill = 'white') +
+  labs(x="Season",
+       y="Average Number of Strikeouts per 9 Innings Pitched",
+       title="Changes in Strikeouts per 9 Innings Pitched",
+       subtitle="Between the 2015 & 2022 Regular Seasons") +
+  theme_classic()
+```
+
+As you can see, we have a nice visualization that shows both the distribution of the data within each year (sideways density plot) and the summary statistics of the data within each year (the overlaid boxplot!).

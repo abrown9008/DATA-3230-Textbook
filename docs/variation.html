@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./association.html" rel="next">
 <link href="./legends_colors_fonts.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -211,6 +212,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Communicating Variation</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Communicating Association Between Variables</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -227,6 +234,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#time-series-plot-with-standard-errors" id="toc-time-series-plot-with-standard-errors" class="nav-link" data-scroll-target="#time-series-plot-with-standard-errors"><span class="header-section-number">5.3.1</span> Time Series Plot with Standard Errors</a></li>
   </ul></li>
+  <li><a href="#communicating-variation-with-boxplots" id="toc-communicating-variation-with-boxplots" class="nav-link" data-scroll-target="#communicating-variation-with-boxplots"><span class="header-section-number">5.4</span> Communicating Variation with Boxplots</a>
+  <ul class="collapse">
+  <li><a href="#formatting-tick-marks-in-boxplots" id="toc-formatting-tick-marks-in-boxplots" class="nav-link" data-scroll-target="#formatting-tick-marks-in-boxplots"><span class="header-section-number">5.4.1</span> Formatting Tick Marks in Boxplots</a></li>
+  </ul></li>
+  <li><a href="#communicating-data-with-half-violin-plots" id="toc-communicating-data-with-half-violin-plots" class="nav-link" data-scroll-target="#communicating-data-with-half-violin-plots"><span class="header-section-number">5.5</span> Communicating Data with Half-Violin Plots</a></li>
   </ul>
 </nav>
     </div>
@@ -503,6 +515,10 @@ $ se     &lt;dbl&gt; 0.099, 0.091, 0.091, 0.097, 0.079, 0.071, 0.083, 0.084, 0.0
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="communicating-variation-with-boxplots" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="communicating-variation-with-boxplots"><span class="header-section-number">5.4</span> Communicating Variation with Boxplots</h2>
 <p>Looks pretty good! But what’s the problem?</p>
 <p>Primarily, because we have so many seasons (big x-axis) and so many pitchers in a given season (big <span class="math inline">\(n\)</span> within a given year), the standard errors are very small. This makes it difficult to see the standard errors on the plot.</p>
 <p>To get around this issue, it may be preferable to use boxplots rather than standard errors to represent the within-year variation.</p>
@@ -568,6 +584,8 @@ $ SO9      &lt;dbl&gt; 3.710204, 3.253012, 4.444834, 5.711538, 2.970000, 4.57894
 </div>
 </div>
 </div>
+<section id="formatting-tick-marks-in-boxplots" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="formatting-tick-marks-in-boxplots"><span class="header-section-number">5.4.1</span> Formatting Tick Marks in Boxplots</h3>
 <p>Okay we’re getting closer! Here, we can see that not only is the mean SO/9 increasing over time, but so too is the variability from year to year.</p>
 <p>We can see this since the difference between the top of each box and the bottom of each box, the 75th and 25th percentiles, respectively, tends to widen as we move from left to right across the graphic.</p>
 <p>But notice what’s going on the x-axis. The tick mark labels are all overlapping to the point where they are completely illegible.</p>
@@ -610,9 +628,38 @@ $ SO9      &lt;dbl&gt; 3.710204, 3.253012, 4.444834, 5.711538, 2.970000, 4.57894
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="communicating-data-with-half-violin-plots" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="communicating-data-with-half-violin-plots"><span class="header-section-number">5.5</span> Communicating Data with Half-Violin Plots</h2>
+<p>This looks much better! We can now see the within-year variation in SO/9 over time much more clearly than before.</p>
+<p>However, boxplots are not without some limitations of their own. For instance, they do not show the distribution of the data within each year. The boxplot only shows the median, the 25th and 75th percentiles, and the minimum and maximum values.</p>
+<p>So what if we wanted the benefits of the boxplots but also wanted to visually assess distributional characteristics of the data within each year, like we do with histograms and density plots?</p>
+<p>This is where half-violin plots come in! Half-violin plots are a combination of boxplots and density plots. They show the distribution of the data within each year while also showing the median, the 25th and 75th percentiles, and the minimum and maximum values.</p>
+<p>Let’s see how we can create a violin plot using <code>geom_violinhalf</code> using the helper package <code>see</code>, this time focusing only on the years between 2015 and 2022:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(see)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>so9 <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">between</span>(yearID,<span class="dv">2015</span>,<span class="dv">2022</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(yearID),<span class="at">y=</span>SO9)) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violinhalf</span>(<span class="at">fill=</span><span class="st">'green'</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">'white'</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Season"</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Average Number of Strikeouts per 9 Innings Pitched"</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">"Changes in Strikeouts per 9 Innings Pitched"</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Between the 2015 &amp; 2022 Regular Seasons"</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="variation_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As you can see, we have a nice visualization that shows both the distribution of the data within each year (sideways density plot) and the summary statistics of the data within each year (the overlaid boxplot!).</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1043,6 +1090,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./association.html" class="pagination-link" aria-label="Communicating Association Between Variables">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Communicating Association Between Variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

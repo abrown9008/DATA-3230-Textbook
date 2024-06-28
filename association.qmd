@@ -1,0 +1,249 @@
+# Communicating Association Between Variables
+
+## Introduction
+
+So far, we have generally been learning about methods of visualization for single variables.
+
+However, there are often situations in which the questions we are asking involve the association of variables.
+
+For instance, what if I wanted to visually assess the association between Major League Baseball (MLB) team runs scored and homeruns hit during the 2022 regular season?
+
+Nothing we have learned so far can do this in an effective way.
+
+Instead, a tool called a *scatterplot* would be more effective.
+
+## Communicating Association with a Scatterplot
+
+A scatterplot, in general, is a visualization which exists on a Cartesian plane, like what we learned about back in high school algebra. It has an $x$ and $y$ axis which represent numeric variables.
+
+It is common to plot individual points, which contain quantitative $x$ and $y$ coordinates, upon this plane. In the above baseball example, runs scored and homeruns hit are both quantitative attributes of an MLB team during a given season that we could easily plot upon the aforementioned plane.
+
+With this visualization, we can get a sense of the relationship or association which may exist between the two quantitative variables we are interested in!
+
+Let's take a look at our own example!
+
+Of course, we must first get our data into the right format prior to visualization:
+
+```{r}
+library(tidyverse)
+mlb <- Lahman::Batting |>
+  select(yearID,teamID,R,HR) |>
+  filter(yearID == 2022) |>
+  group_by(teamID) |>
+  summarize(R = sum(R,na.rm=T),
+            HR = sum(HR,na.rm=T))
+
+mlb |>
+  glimpse()
+```
+
+Now, we can use our old friend `geom_point` to help us create the scatterplot!
+
+```{r}
+mlb |>
+  ggplot(aes(x=R,y=HR)) + geom_point() +
+  labs(x="Team Runs Scored",
+       y="Team Homeruns Hit",
+       title="Association Between Homeruns Hit and Runs Scored by MLB Team",
+       subtitle="2022 Regular Season") +
+  theme_classic()
+```
+
+### Interpreting a Scatterplot
+
+Okay great! We probably know how to generally interpret a scatterplot. Here, it seems as the number of runs scored increases, intutitively homeruns hit also increases.
+
+But we can be a little bit more specific in our interpretations of a scatterplot by answering the below questions:
+
+1.  What is the direction of the relationship?
+2.  What is the form of the relationship?
+3.  What is the strength of the form of the relationship?
+4.  What unusual characteristics are exhibited?
+
+Let's talk more specifically about how to answer these questions.
+
+#### Scatterplots: Direction
+
+"Direction" refers to how the points "move" together. If as the values on the x-axis increase, the values on the y-axis also increase, meaning that we have a general upward direction moving left to right across the graph, then we say the direction is "positive".
+
+If, as the values on the x-axis increase, the values on the y-axis decrease, meaning that we have a general downward direction moving left to right across the graph, then we say the direction is "negative".
+
+```{r,echo=F}
+set.seed(1)
+pos_matrix <- as.data.frame(MASS::mvrnorm(30,mu=c(0,0),Sigma=matrix(c(1,0.54321,0.54321,1),byrow=T,ncol=2)))
+pos_matrix |>
+  ggplot(aes(V1,V2)) + geom_point() +
+  labs(x="",y="",title="Positive Direction") + theme_classic() +
+  theme(plot.title=element_text(hjust=0.5))
+neg_matrix <- as.data.frame(MASS::mvrnorm(30,mu=c(0,0),Sigma=matrix(c(1,-0.54321,-0.54321,1),byrow=T,ncol=2)))
+neg_matrix |>
+  ggplot(aes(V1,V2)) + geom_point() +
+  labs(x="",y="",title="Negative Direction") + theme_classic() +
+  theme(plot.title=element_text(hjust=0.5))
+```
+
+#### Scatterplots: Form
+
+When we talk about the "form" of the relationship, we are referring to the general pattern the points follow.
+
+For me, I usually refer to two main "forms": Linear and Non-Linear
+
+```{r,echo=FALSE, out.width="80%",out.height="60%",fig.cap="From: Statistics for Managers Using Microsoft® Excel  4th Edition, 2004 Prentice-Hall, c/o Dr. Taasoobshirazi"}
+knitr::include_graphics("docs/Communicating Association/scatter1.JPG")
+```
+
+#### Scatterplots: Strength
+
+What we're talking about with "strength" is how close the points fall to the general form of the relationship identified in the prior question.
+
+We can use adjectives like "weak", "moderate", and "strong" to describe the strength.
+
+```{r,echo=FALSE, out.width="80%",out.height="60%",fig.cap="From: Statistics for Managers Using Microsoft® Excel  4th Edition, 2004 Prentice-Hall, c/o Dr. Taasoobshirazi"}
+knitr::include_graphics("docs/Communicating Association/scatter2.jpg")
+```
+
+#### Scatterplots: Unusual Characteristics
+
+What we mean by unusual characteristics is really anything that just visually appears odd.
+
+Generally these are things like clusters or outliers, but could be anything that seems unusual with respect to traditional forms of scatterplots like those we've seen so far.
+
+Let's look at a clustering example using the `palmerpenguins::penguins` data and an outlier example using the `MASS::Boston` data.
+
+```{r,echo=F}
+penguins <- palmerpenguins::penguins
+penguins |>
+  ggplot(aes(bill_depth_mm,body_mass_g)) +
+  geom_point() +
+  labs(x = "Bill Depth (in mm)",
+       y = "Body Mass (in grams)",
+       title="Penguin Body Mass vs Bill Depth",
+       subtitle="An Example of Clusters") +
+  theme_classic()
+```
+
+```{r,echo=F}
+boston <- MASS::Boston
+boston |>
+  ggplot(aes(rm,medv)) + geom_point() +
+  labs(x="Number of Rooms",
+       y="Home Value (in thousands of $)",
+       title="Boston Home Values vs Number of Rooms",
+       subtitle="Example of Outliers") +
+  theme_classic()
+```
+
+Now, with all of this in mind, we can reconsider our baseball example from before!
+
+```{r,echo=F}
+mlb |>
+  ggplot(aes(x=R,y=HR)) + geom_point() +
+  labs(x="Team Runs Scored",
+       y="Team Homeruns Hit",
+       title="Association Between Homeruns Hit and Runs Scored by MLB Team",
+       subtitle="2022 Regular Season") +
+  theme_classic()
+```
+
+If I were to interpret this scatterplot, I would say we have evidence for a:
+
+1.  Positive,
+2.  Linear relationship between runs scored and homeruns hit of,
+3.  Moderate strength with,
+4.  No clear unusual characteristics.
+
+Obviously there is a good deal of subjectivity in these interpretations and context is just as important!
+
+### Adding a Regression Line and Equation to a Scatterplot
+
+Very commonly when we are generating scatterplots, it is often of interest to us to determine an equation for a line which best explains the relationship we are visually interpreting. - This "line" is called a "simple linear regression (SLR)" line.
+
+How can we include this line and the equation itself on our plots? We can do so with the help of `geom_smooth`:
+
+```{r,message=F,warning=F}
+mlb |>
+  ggplot(aes(x=R,y=HR)) + geom_point() +
+  geom_smooth(method='lm',se=F) +
+  labs(x="Team Runs Scored",
+       y="Team Homeruns Hit",
+       title="Association Between Homeruns Hit and Runs Scored by MLB Team",
+       subtitle="2022 Regular Season") +
+  theme_classic()
+```
+
+In the code, notice we added `geom_smooth` which allows us to visualize lines or curves around data points. Note, `method='lm'` refers to the line to be fit, which is a linear model in this case. Further, `se=F` means that we don't want the standard errors of the line to be rendered on the visualization.
+
+Okay this looks great! But now how do we get the equation of that line to also render on the graph?
+
+Here, we can use a nice function called `stat_regline_equation` which is part of the helper package `ggpubr`
+
+```{r,message=F}
+library(ggpubr)
+mlb |>
+  ggplot(aes(x=R,y=HR)) + geom_point() +
+  geom_smooth(method='lm',se=F) +
+  stat_regline_equation(label.x = 625, label.y = 225) +
+  labs(x="Team Runs Scored",
+       y="Team Homeruns Hit",
+       title="Association Between Homeruns Hit and Runs Scored by MLB Team",
+       subtitle="2022 Regular Season") +
+  theme_classic()
+```
+
+Notice that the `label.x` and `label.y` arguments control the position of the regression equation.
+
+And just like we did previously with text labels/annotations, we can also control their size and color.
+
+## Faceting Scatterplots
+
+Obviously with the `Lahman` baseball data, there are lots of different ways that we can slice the data to answer different questions.
+
+For instance, in the prior visualization, we observed the relationship between homeruns hit and runs scored for a single, static season.
+
+What if we wanted to see how that relationship changed from say, 2019 to 2022?
+
+We can use either `facet_wrap` or `facet_grid` to help us here!
+
+First, and as usual, let's get our data into the right format:
+
+```{r}
+mlb2 <- Lahman::Batting |>
+  select(yearID,teamID,R,HR) |>
+  filter(between(yearID,2019,2022)) |>
+  group_by(teamID,yearID) |>
+  summarize(R = sum(R,na.rm=T),
+            HR = sum(HR,na.rm=T))
+
+mlb2 |>
+  glimpse()
+```
+
+Now we can use our same code from before to build a base plot, but then add a faceting function to it to create individual visualizations for each year!
+
+```{r}
+## Facet Grid ##
+mlb2 |>
+  ggplot(aes(x=R,y=HR)) + geom_point() +
+  facet_grid(~yearID) +
+  labs(x="Team Runs Scored",
+       y="Team Homeruns Hit",
+       title="Association Between Homeruns Hit and Runs Scored by MLB Team",
+       subtitle="2019 - 2022 Regular Seasons") +
+  theme_bw()
+```
+
+We can also add regression lines to our facets as well!
+
+```{r,message=F}
+mlb2 |>
+  ggplot(aes(x=R,y=HR,color=factor(yearID))) + geom_point() +
+  geom_smooth(method = 'lm',se = F) +
+  facet_grid(~yearID) +
+  stat_regline_equation(label.y=300) +
+  labs(x="Team Runs Scored",
+       y="Team Homeruns Hit",
+       title="Association Between Homeruns Hit and Runs Scored by MLB Team",
+       subtitle="2019 - 2022 Regular Seasons") +
+  theme_bw() +
+  theme(legend.position = 'none')
+```
