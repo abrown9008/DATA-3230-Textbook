@@ -616,7 +616,7 @@ $ HR     &lt;int&gt; 220, 58, 144, 173, 249, 103, 239, 243, 213, 77, 195, 171, 2
 </div>
 </div>
 </div>
-<p>I tend to like this a little bit better! However, again, if our goal is comparing the diamond cut classifications across the levels of color classification, we are running into the issue of unequal group size. To get around this, we can convert our raw frequencies into relative frequencies (or proportions) to create what’s called a “100% stacked bar chart”:</p>
+<p>I tend to like this a little bit better! However, again, if our goal is to compare the diamond cut classifications across the levels of color classification, we are running into the issue of unequal group size. To get around this, we can convert our raw frequencies into relative frequencies (or proportions) to create what’s called a “100% stacked bar chart”:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>diamonds_df <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">|&gt;</span></span>
@@ -637,7 +637,7 @@ $ HR     &lt;int&gt; 220, 58, 144, 173, 249, 103, 239, 243, 213, 77, 195, 171, 2
 </div>
 </div>
 </div>
-<p>Now that we have standardized our frequencies, comparison is greatly simplified! Here, we can see that among the worst color classification (J), fair, good, and very good cut diamonds make up a slightly greater proportion of the overall diamond total compared to the better color classifications.</p>
+<p>Now that we have standardized our frequencies, the comparison is greatly simplified! Here, we can see that among the worst color classification (J), fair, good, and very good cut diamonds make up a slightly greater proportion of the overall diamond total compared to the better color classifications.</p>
 <p>We have some ways we can potentially modify the above visualization. Namely:</p>
 <ol type="1">
 <li>Converting the proportions to percentages on the y-axis</li>

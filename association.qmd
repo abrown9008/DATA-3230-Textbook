@@ -313,7 +313,7 @@ diamonds_df |>
   theme_classic()
 ```
 
-I tend to like this a little bit better! However, again, if our goal is comparing the diamond cut classifications across the levels of color classification, we are running into the issue of unequal group size. To get around this, we can convert our raw frequencies into relative frequencies (or proportions) to create what's called a "100% stacked bar chart":
+I tend to like this a little bit better! However, again, if our goal is to compare the diamond cut classifications across the levels of color classification, we are running into the issue of unequal group size. To get around this, we can convert our raw frequencies into relative frequencies (or proportions) to create what's called a "100% stacked bar chart":
 
 ```{r}
 diamonds_df |>
@@ -329,7 +329,7 @@ diamonds_df |>
   theme_classic()
 ```
 
-Now that we have standardized our frequencies, comparison is greatly simplified! Here, we can see that among the worst color classification (J), fair, good, and very good cut diamonds make up a slightly greater proportion of the overall diamond total compared to the better color classifications.
+Now that we have standardized our frequencies, the comparison is greatly simplified! Here, we can see that among the worst color classification (J), fair, good, and very good cut diamonds make up a slightly greater proportion of the overall diamond total compared to the better color classifications.
 
 We have some ways we can potentially modify the above visualization. Namely:
 

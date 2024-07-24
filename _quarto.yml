@@ -21,6 +21,8 @@ book:
     - variation.qmd
     
     - association.qmd
+    
+    - special_topics.qmd
 
 bibliography: references.bib
 
