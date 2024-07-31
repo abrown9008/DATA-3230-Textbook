@@ -6,7 +6,7 @@ In this course, we have learned about many fundamental visualizations in data sc
 
 However, what we have learned in this course is only the beginning. There are many, many types of visualizations that serve various purposes.
 
-At the end of this course, I wanted to introduce you to two that I have found to be particularly useful: a *heatmap* and a *dendrogram.*
+At the end of this course, I wanted to introduce you to one that I have found to be particularly useful: a *heatmap.*
 
 ## Heatmaps
 
